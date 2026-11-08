@@ -1,0 +1,45 @@
+
+/* Cores principais do MiauLarr */
+:root {
+    --laranja: #f47b45;
+    --laranja-claro: #fff1e8;
+    --branco: #ffffff;
+    --preto: #242424;
+}
+
+/* Configurações gerais */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    color: var(--preto);
+    background-color: var(--branco);
+}
+
+/* Cabeçalho */
+header {
+    padding: 30px 20px;
+    text-align: center;
+    background-color: var(--laranja-claro);
+}
+
+h1 {
+    color: var(--laranja);
+}
+
+/* Conteúdo principal */
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* Rodapé */
+footer {
+    padding: 20px;
+    text-align: center;
+    background-color: var(--laranja-claro);
+}
