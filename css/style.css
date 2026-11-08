@@ -1,5 +1,5 @@
 
-/* Cores principais do MiauLarr */
+/* Cores principais */
 :root {
     --laranja: #f47b45;
     --laranja-claro: #fff1e8;
@@ -12,6 +12,10 @@
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
@@ -22,29 +26,10 @@ body {
 /* Cabeçalho */
 header {
     padding: 30px 20px;
-    text-align: center;
     background-color: var(--laranja-claro);
-}
-
-h1 {
-    color: var(--laranja);
-}
-
-/* Conteúdo principal */
-main {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 0 20px;
-}
-
-/* Rodapé */
-footer {
-    padding: 20px;
     text-align: center;
-    background-color: var(--laranja-claro);
 }
 
-/* Menu de navegação */
 .topo {
     max-width: 1100px;
     margin: 0 auto;
@@ -56,10 +41,14 @@ footer {
 
 .topo h1 {
     margin: 0;
+    color: var(--laranja);
+    font-size: 32px;
 }
 
+/* Menu de navegação */
 nav {
     display: flex;
+    align-items: center;
     gap: 25px;
 }
 
@@ -73,31 +62,31 @@ nav a:hover {
     color: var(--laranja);
 }
 
-/* Menu em telas menores */
-@media (max-width: 600px) {
-    .topo {
-        flex-direction: column;
-    }
+nav a:focus-visible,
+.botao:focus-visible {
+    outline: 3px solid var(--preto);
+    outline-offset: 4px;
+}
 
-    nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 15px;
-    }
+/* Conteúdo principal */
+main {
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 0 20px;
 }
 
 /* Apresentação inicial */
 .apresentacao {
-    padding: 50px 30px;
-    margin-bottom: 40px;
     background-color: var(--laranja-claro);
+    padding: 50px 30px;
     border-radius: 15px;
     text-align: center;
+    margin-bottom: 40px;
 }
 
 .apresentacao h2 {
     font-size: 32px;
-    margin-bottom: 15px;
+    margin: 0 0 15px;
 }
 
 .apresentacao p {
@@ -105,6 +94,7 @@ nav a:hover {
     line-height: 1.6;
 }
 
+/* Botão da apresentação */
 .botao {
     display: inline-block;
     margin-top: 20px;
@@ -120,42 +110,63 @@ nav a:hover {
     background-color: #df6430;
 }
 
+/* Catálogo */
+#catalogo {
+    background-color: var(--branco);
+    padding: 20px 0;
+    margin-top: 30px;
+}
 
-/* Catálogo de gatos */
+#catalogo h2 {
+    margin-top: 0;
+}
+
+/* Organização dos cards */
 .lista-gatos {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
     gap: 20px;
     margin-top: 25px;
 }
 
+/* Card do gato */
 .card-gato {
     background-color: var(--branco);
     border: 1px solid #eeeeee;
     border-radius: 12px;
     overflow: hidden;
+    text-align: left;
 }
 
+/* Espaço reservado para fotografia */
 .foto-gato {
-    background-color: var(--laranja-claro);
     height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
+    background-color: var(--laranja-claro);
     color: #777777;
 }
 
+/* Informações do gato */
 .informacoes-gato {
     padding: 20px;
 }
 
 .informacoes-gato h3 {
-    margin-top: 0;
+    margin: 0 0 15px;
     color: var(--laranja);
 }
 
+.informacoes-gato p {
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+/* Situação do animal */
 .status-gato {
     display: inline-block;
+    margin-top: 5px;
     padding: 6px 12px;
     background-color: #e7f7e9;
     color: #247a35;
@@ -164,25 +175,39 @@ nav a:hover {
     font-weight: bold;
 }
 
-/* Organização dos cards */
-#catalogo {
-    max-width: 1100px;
-    margin: 0 auto;
-    text-align: left;
+/* Rodapé */
+footer {
+    padding: 20px;
+    background-color: var(--laranja-claro);
+    text-align: center;
 }
 
-.lista-gatos {
-    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
-    justify-content: start;
+/* Ajustes para celulares */
+@media (max-width: 600px) {
+    .topo {
+        flex-direction: column;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    main {
+        margin: 20px auto;
+        padding: 0 15px;
+    }
+
+    .apresentacao {
+        padding: 35px 20px;
+    }
+
+    .apresentacao h2 {
+        font-size: 26px;
+    }
+
+    .lista-gatos {
+        grid-template-columns: 1fr;
+    }
 }
-
-.card-gato {
-    max-width: 300px;
-    text-align: left;
-}
-
-.informacoes-gato p {
-    margin: 10px 0;
-}
-
-
