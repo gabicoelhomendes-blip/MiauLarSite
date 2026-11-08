@@ -43,3 +43,46 @@ footer {
     text-align: center;
     background-color: var(--laranja-claro);
 }
+
+/* Menu de navegação */
+.topo {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.topo h1 {
+    margin: 0;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: var(--preto);
+    text-decoration: none;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: var(--laranja);
+}
+
+/* Menu em telas menores */
+@media (max-width: 600px) {
+    .topo {
+        flex-direction: column;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+}
+
