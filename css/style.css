@@ -86,3 +86,38 @@ nav a:hover {
     }
 }
 
+/* Apresentação inicial */
+.apresentacao {
+    padding: 50px 30px;
+    margin-bottom: 40px;
+    background-color: var(--laranja-claro);
+    border-radius: 15px;
+    text-align: center;
+}
+
+.apresentacao h2 {
+    font-size: 32px;
+    margin-bottom: 15px;
+}
+
+.apresentacao p {
+    font-size: 17px;
+    line-height: 1.6;
+}
+
+.botao {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 24px;
+    background-color: var(--laranja);
+    color: var(--branco);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.botao:hover {
+    background-color: #df6430;
+}
+
+
