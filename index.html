@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MiauLarr | Adoção de Gatos</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/pesquisa.js" defer></script>
 </head>
 <body>
 
@@ -45,6 +46,21 @@
         <section id="catalogo">
             <h2>Gatos para adoção</h2>
             <p>Conheça os gatos que procuram um lar.</p>
+        <!-- Pesquisa de gatos -->
+<div class="pesquisa-gatos">
+    <label for="campo-pesquisa">
+        Pesquisar gato pelo nome:
+    </label>
+
+    <input
+        type="search"
+        id="campo-pesquisa"
+        placeholder="Digite o nome do gato..."
+        autocomplete="off"
+    >
+</div>
+
+<p id="resultado-pesquisa" role="status" aria-live="polite"></p>
 
             <div class="lista-gatos">
 
