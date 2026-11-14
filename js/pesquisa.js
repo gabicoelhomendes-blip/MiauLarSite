@@ -4,6 +4,7 @@ const filtroSexo = document.getElementById("filtro-sexo");
 const filtroPorte = document.getElementById("filtro-porte");
 const cardsGatos = document.querySelectorAll(".card-gato");
 const resultadoPesquisa = document.getElementById("resultado-pesquisa");
+const botaoLimpar = document.getElementById("limpar-filtros");
 
 // Padroniza os textos para facilitar a comparação
 function normalizarTexto(texto) {
@@ -82,3 +83,16 @@ function pesquisarGatos() {
 campoPesquisa.addEventListener("input", pesquisarGatos);
 filtroSexo.addEventListener("change", pesquisarGatos);
 filtroPorte.addEventListener("change", pesquisarGatos);
+
+// Limpa a pesquisa e todos os filtros
+function limparFiltros() {
+    campoPesquisa.value = "";
+    filtroSexo.value = "";
+    filtroPorte.value = "";
+
+    pesquisarGatos();
+}
+
+// Executa a limpeza ao clicar no botão
+botaoLimpar.addEventListener("click", limparFiltros);
+
