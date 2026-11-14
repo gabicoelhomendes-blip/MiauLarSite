@@ -219,3 +219,39 @@ footer {
 .card-gato[hidden] {
     display: none;
 }
+
+/* Área de pesquisa dos gatos */
+.pesquisa-gatos {
+    margin: 25px 0;
+    max-width: 450px;
+}
+
+/* Texto do campo de pesquisa */
+.pesquisa-gatos label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+/* Campo para digitar o nome */
+#campo-pesquisa {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+/* Destaque ao selecionar o campo */
+#campo-pesquisa:focus {
+    outline: 2px solid var(--laranja);
+    outline-offset: 2px;
+}
+
+/* Mensagem dos resultados */
+#resultado-pesquisa {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #555555;
+}
