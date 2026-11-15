@@ -363,3 +363,52 @@ footer {
 .informacoes-gato > p:has(.botao) {
     margin-bottom: 0;
 }
+
+/* Página de cadastro */
+.cadastro {
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+}
+
+.cadastro h2 {
+    color: var(--laranja);
+}
+
+#form-cadastro {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+#form-cadastro label {
+    font-weight: bold;
+}
+
+#form-cadastro input,
+#form-cadastro select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #dddddd;
+    border-radius: 8px;
+    font: inherit;
+}
+
+#form-cadastro input:focus,
+#form-cadastro select:focus {
+    outline: 2px solid var(--laranja);
+    outline-offset: 2px;
+}
+
+#form-cadastro .botao {
+    border: none;
+    margin-top: 12px;
+    font: inherit;
+}
+
+#form-cadastro .botao:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

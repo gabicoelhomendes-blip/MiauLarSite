@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro | MiauLarr</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <div class="topo">
+            <h1>MiauLarr</h1>
+
+            <nav aria-label="Menu principal">
+                <a href="index.html">Início</a>
+                <a href="index.html#catalogo">Gatos para adoção</a>
+            </nav>
+        </div>
+
+        <p>Faça parte do MiauLarr!</p>
+    </header>
+
+    <main>
+        <section class="cadastro">
+            <h2>Criar conta</h2>
+
+            <p>Preencha seus dados para começar.</p>
+
+            <form id="form-cadastro">
+                <label for="nome">Nome completo</label>
+                <input
+                    type="text"
+                    id="nome"
+                    name="nome"
+                    autocomplete="name"
+                    required
+                >
+
+                <label for="email">E-mail</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="telefone">Telefone</label>
+                <input
+                    type="tel"
+                    id="telefone"
+                    name="telefone"
+                    autocomplete="tel"
+                    required
+                >
+
+                <label for="senha">Senha</label>
+                <input
+                    type="password"
+                    id="senha"
+                    name="senha"
+                    autocomplete="new-password"
+                    minlength="8"
+                    required
+                >
+
+                <label for="perfil">Tipo de conta</label>
+                <select id="perfil" name="perfil" required>
+                    <option value="">Selecione</option>
+                    <option value="adotante">Adotante</option>
+                    <option value="responsavel">Responsável</option>
+                </select>
+
+                <button type="submit" class="botao" disabled>
+                    Cadastrar
+                </button>
+
+                <p>
+                    O cadastro estará disponível após a
+                    implementação do servidor.
+                </p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>MiauLarr - Projeto acadêmico de adoção de gatos.</p>
+    </footer>
+
+</body>
+</html>
