@@ -445,3 +445,38 @@ footer {
     margin-top: auto;
     padding-top: 15px;
 }
+/* Formulário de cadastro */
+.cadastro form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cadastro label {
+    display: block;
+    font-weight: bold;
+    margin-top: 8px;
+}
+
+.cadastro input,
+.cadastro select {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.cadastro button {
+    width: 100%;
+    margin-top: 15px;
+    padding: 12px;
+    cursor: pointer;
+}
+
+#mensagem-cadastro {
+    text-align: center;
+    font-weight: bold;
+}

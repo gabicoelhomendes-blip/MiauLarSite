@@ -29,12 +29,15 @@
             <p>Preencha seus dados para começar.</p>
 
             <form id="form-cadastro">
+
                 <label for="nome">Nome completo</label>
                 <input
                     type="text"
                     id="nome"
                     name="nome"
                     autocomplete="name"
+                    minlength="3"
+                    maxlength="120"
                     required
                 >
 
@@ -44,6 +47,7 @@
                     id="email"
                     name="email"
                     autocomplete="email"
+                    maxlength="254"
                     required
                 >
 
@@ -53,6 +57,8 @@
                     id="telefone"
                     name="telefone"
                     autocomplete="tel"
+                    minlength="8"
+                    maxlength="30"
                     required
                 >
 
@@ -73,14 +79,20 @@
                     <option value="responsavel">Responsável</option>
                 </select>
 
-                <button type="submit" class="botao" disabled>
+                <button
+                    type="submit"
+                    class="botao"
+                    id="botao-cadastrar"
+                >
                     Cadastrar
                 </button>
 
-                <p>
-                    O cadastro estará disponível após a
-                    implementação do servidor.
-                </p>
+                <p
+                    id="mensagem-cadastro"
+                    role="status"
+                    aria-live="polite"
+                ></p>
+
             </form>
         </section>
     </main>
@@ -89,5 +101,6 @@
         <p>MiauLarr - Projeto acadêmico de adoção de gatos.</p>
     </footer>
 
+    <script src="js/cadastro.js" defer></script>
 </body>
 </html>
