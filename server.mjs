@@ -3,6 +3,7 @@ import http from "node:http";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import banco from "./database.mjs";
 
 const porta = 3000;
 const pastaProjeto = path.dirname(fileURLToPath(import.meta.url));
@@ -21,6 +22,36 @@ const tipos = {
 
 // Cria o servidor do MiauLarr
 const servidor = http.createServer(async (req, res) => {
+
+    // Verifica se o banco de dados está funcionando
+    if (req.url === "/api/status" && req.method === "GET") {
+        try {
+            const resultado = banco.prepare(
+                "SELECT COUNT(*) AS total FROM usuarios"
+            ).get();
+
+            res.writeHead(200, {
+                "Content-Type": "application/json; charset=utf-8"
+            });
+
+            res.end(JSON.stringify({
+                sistema: "MiauLarr",
+                banco: "conectado",
+                usuarios: resultado.total
+            }));
+        } catch {
+            res.writeHead(500, {
+                "Content-Type": "application/json; charset=utf-8"
+            });
+
+            res.end(JSON.stringify({
+                erro: "Falha ao consultar o banco de dados"
+            }));
+        }
+
+        return;
+    }
+
     if (req.method !== "GET" && req.method !== "HEAD") {
         res.writeHead(405);
         res.end("Metodo nao permitido");
