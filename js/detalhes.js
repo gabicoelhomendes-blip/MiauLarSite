@@ -113,7 +113,20 @@ const gatos = {
         localizacao: "Franca - SP",
         saude: "A confirmar com o responsável.",
         status: "Disponível",
+
         imagem: "cats/luck.png"
+    },
+
+    frida: {
+        nome: "Frida",
+        idade: "2 anos",
+        sexo: "Fêmea",
+        raca: "Sem raça definida (SRD)",
+        porte: "Pequeno",
+        localizacao: "Franca - SP",
+        saude: "A confirmar com o responsável.",
+        status: "Disponível",
+        imagem: "cats/frida.png"
     }
 };
 
