@@ -48,7 +48,20 @@ const gatos = {
         localizacao: "Franca - SP",
         saude: "A confirmar com o responsável.",
         status: "Disponível",
+
         imagem: "cats/nina.png"
+    },
+
+    thor: {
+        nome: "Thor",
+        idade: "2 anos",
+        sexo: "Macho",
+        raca: "Sem raça definida (SRD)",
+        porte: "Médio",
+        localizacao: "Franca - SP",
+        saude: "A confirmar com o responsável.",
+        status: "Disponível",
+        imagem: "cats/thor.png"
     }
 };
 
