@@ -339,3 +339,27 @@ footer {
         margin-top: 0;
     }
 }
+
+/* Organiza os cards para manter os botões alinhados */
+.card-gato {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Faz as informações ocuparem a altura disponível */
+.informacoes-gato {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Mantém o botão na parte inferior do card */
+.informacoes-gato > p:has(.botao) {
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+/* Evita espaço extra abaixo do botão */
+.informacoes-gato > p:has(.botao) {
+    margin-bottom: 0;
+}
