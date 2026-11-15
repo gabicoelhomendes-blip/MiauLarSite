@@ -126,9 +126,23 @@ const gatos = {
         localizacao: "Franca - SP",
         saude: "A confirmar com o responsável.",
         status: "Disponível",
+
         imagem: "cats/frida.png"
+    },
+
+    bento: {
+        nome: "Bento",
+        idade: "1 ano",
+        sexo: "Macho",
+        raca: "Sem raça definida (SRD)",
+        porte: "Médio",
+        localizacao: "Franca - SP",
+        saude: "A confirmar com o responsável.",
+        status: "Disponível",
+        imagem: "cats/bento.png"
     }
 };
+
 
 
 
