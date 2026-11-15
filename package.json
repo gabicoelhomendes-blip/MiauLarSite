@@ -1,0 +1,15 @@
+
+{
+  "name": "miaularsite",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Plataforma web de adocao de gatos",
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "dev": "node --watch server.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  }
+}
