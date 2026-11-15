@@ -87,9 +87,23 @@ const gatos = {
         localizacao: "Franca - SP",
         saude: "A confirmar com o responsável.",
         status: "Disponível",
+
         imagem: "cats/oliver.png"
+    },
+
+    milk: {
+        nome: "Milk",
+        idade: "6 meses",
+        sexo: "Fêmea",
+        raca: "Sem raça definida (SRD)",
+        porte: "Pequeno",
+        localizacao: "Franca - SP",
+        saude: "A confirmar com o responsável.",
+        status: "Disponível",
+        imagem: "cats/milk.png"
     }
 };
+
 
 
 
