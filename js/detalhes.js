@@ -100,9 +100,23 @@ const gatos = {
         localizacao: "Franca - SP",
         saude: "A confirmar com o responsável.",
         status: "Disponível",
+
         imagem: "cats/milk.png"
+    },
+
+    luck: {
+        nome: "Luck",
+        idade: "1 ano",
+        sexo: "Fêmea",
+        raca: "Sem raça definida (SRD)",
+        porte: "Pequeno",
+        localizacao: "Franca - SP",
+        saude: "A confirmar com o responsável.",
+        status: "Disponível",
+        imagem: "cats/luck.png"
     }
 };
+
 
 
 
