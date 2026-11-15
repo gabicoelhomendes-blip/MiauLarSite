@@ -412,3 +412,36 @@ footer {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* Simplifica as informações exibidas nos cards */
+.card-gato .informacoes-gato p {
+    display: none;
+}
+
+/* Mantém a idade visível no catálogo */
+.card-gato .informacoes-gato p:first-of-type {
+    display: block;
+}
+
+/* Mantém o botão Ver detalhes visível */
+.card-gato .informacoes-gato p:has(.botao) {
+    display: block;
+}
+
+/* Esconde o status no catálogo */
+.card-gato .status-gato {
+    display: none;
+}
+
+/* Organiza os cards */
+.card-gato .informacoes-gato {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* Posiciona o botão na parte inferior */
+.card-gato .informacoes-gato p:has(.botao) {
+    margin-top: auto;
+    padding-top: 15px;
+}
