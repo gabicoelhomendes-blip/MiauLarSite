@@ -74,9 +74,23 @@ const gatos = {
         localizacao: "Franca - SP",
         saude: "A confirmar com o responsável.",
         status: "Disponível",
+
         imagem: "cats/amora.png"
+    },
+
+    oliver: {
+        nome: "Oliver",
+        idade: "4 meses",
+        sexo: "Macho",
+        raca: "Sem raça definida (SRD)",
+        porte: "Pequeno",
+        localizacao: "Franca - SP",
+        saude: "A confirmar com o responsável.",
+        status: "Disponível",
+        imagem: "cats/oliver.png"
     }
 };
+
 
 
 // Identifica qual gato foi selecionado
