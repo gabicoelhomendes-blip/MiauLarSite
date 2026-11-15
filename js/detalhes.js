@@ -61,9 +61,23 @@ const gatos = {
         localizacao: "Franca - SP",
         saude: "A confirmar com o responsável.",
         status: "Disponível",
+
         imagem: "cats/thor.png"
+    },
+
+    amora: {
+        nome: "Amora",
+        idade: "1 ano",
+        sexo: "Fêmea",
+        raca: "Sem raça definida (SRD)",
+        porte: "Pequeno",
+        localizacao: "Franca - SP",
+        saude: "A confirmar com o responsável.",
+        status: "Disponível",
+        imagem: "cats/amora.png"
     }
 };
+
 
 // Identifica qual gato foi selecionado
 const parametros = new URLSearchParams(window.location.search);
