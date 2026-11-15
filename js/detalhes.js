@@ -22,7 +22,21 @@ const gatos = {
         localizacao: "Franca - SP",
         saude: "A confirmar com o responsável.",
         status: "Disponível",
+       
         imagem: "cats/luna.jpg"
+    },
+
+    simba: {
+        nome: "Simba",
+        idade: "3 anos",
+        sexo: "Macho",
+        raca: "Sem raça definida (SRD)",
+        porte: "Médio",
+        localizacao: "Franca - SP",
+        saude: "A confirmar com o responsável.",
+        status: "Disponível",
+        imagem: "cats/simba.jpg"
+    
     }
 };
 
