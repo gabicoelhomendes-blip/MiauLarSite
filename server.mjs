@@ -186,7 +186,8 @@ async function entregarArquivo(req, res, url) {
         const paginasPermitidas = [
             "index.html",
             "cadastro.html",
-            "detalhes.html"
+            "detalhes.html",
+            "login.html"
         ];
 
         const pastaPermitida =

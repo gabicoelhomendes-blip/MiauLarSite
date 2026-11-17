@@ -1,0 +1,74 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrar | MiauLarr</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <div class="topo">
+            <h1>MiauLarr</h1>
+
+            <nav aria-label="Menu principal">
+                <a href="index.html">Início</a>
+                <a href="index.html#catalogo">Gatos para adoção</a>
+                <a href="cadastro.html">Criar conta</a>
+            </nav>
+        </div>
+
+        <p>Que bom ter você de volta!</p>
+    </header>
+
+    <main>
+        <section class="cadastro">
+            <h2>Entrar na minha conta</h2>
+            <p>Informe seus dados para continuar.</p>
+
+            <form id="form-login">
+
+                <label for="email">E-mail</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    autocomplete="email"
+                    required
+                >
+
+                <label for="senha">Senha</label>
+                <input
+                    type="password"
+                    id="senha"
+                    name="senha"
+                    autocomplete="current-password"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="botao"
+                    id="botao-entrar"
+                >
+                    Entrar
+                </button>
+
+                <p id="mensagem-login" role="status" aria-live="polite"></p>
+            </form>
+
+            <p>
+                Ainda não tem conta?
+                <a href="cadastro.html">Cadastre-se</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>MiauLarr - Projeto acadêmico de adoção de gatos.</p>
+    </footer>
+
+</body>
+</html>
