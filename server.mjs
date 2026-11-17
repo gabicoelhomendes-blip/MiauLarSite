@@ -491,6 +491,67 @@ function realizarLogout(req, res) {
     }
 }
 
+
+ // Identifica o usuário pela sessão
+function obterUsuarioAutenticado(req) {
+    const cookies = req.headers.cookie || "";
+
+    const cookieSessao = cookies
+        .split(";")
+        .map(cookie => cookie.trim())
+        .find(cookie => cookie.startsWith("miaular_sessao="));
+
+    if (!cookieSessao) {
+        return null;
+    }
+
+    const token = cookieSessao.slice("miaular_sessao=".length);
+
+    if (!/^[a-f0-9]{64}$/.test(token)) {
+        return null;
+    }
+
+    const tokenHash = createHash("sha256")
+        .update(token)
+        .digest("hex");
+
+    const usuario = banco.prepare(`
+        SELECT
+            usuarios.id,
+            usuarios.nome,
+            usuarios.email,
+            usuarios.perfil
+        FROM sessoes
+        INNER JOIN usuarios
+            ON usuarios.id = sessoes.usuario_id
+        WHERE sessoes.token_hash = ?
+          AND sessoes.expira_em > ?
+    `).get(tokenHash, Date.now());
+
+    return usuario || null;
+}
+
+// Confere a autenticação e o perfil permitido
+function exigirPerfil(req, res, perfisPermitidos) {
+    const usuario = obterUsuarioAutenticado(req);
+
+    if (!usuario) {
+        responder(res, 401, {
+            erro: "Faça login para continuar."
+        });
+        return null;
+    }
+
+    if (!perfisPermitidos.includes(usuario.perfil)) {
+        responder(res, 403, {
+            erro: "Você não tem permissão para esta ação."
+        });
+        return null;
+    }
+
+    return usuario;
+}
+
 // Cria o servidor do MiauLarr
 const servidor = http.createServer(async (req, res) => {
 
@@ -538,6 +599,25 @@ const servidor = http.createServer(async (req, res) => {
         // ROTA 5: Encerrar sessão
     if (url.pathname === "/api/logout" && req.method === "POST") {
         realizarLogout(req, res);
+        return;
+    }
+        // Rota de teste: acesso exclusivo de administradores
+    if (url.pathname === "/api/admin/verificar" && req.method === "GET") {
+        const usuario = exigirPerfil(req, res, ["administrador"]);
+
+        if (!usuario) {
+            return;
+        }
+
+        responder(res, 200, {
+            mensagem: "Acesso administrativo autorizado.",
+            usuario: {
+                id: usuario.id,
+                nome: usuario.nome,
+                perfil: usuario.perfil
+            }
+        });
+
         return;
     }
 
