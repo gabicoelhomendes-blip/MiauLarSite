@@ -363,6 +363,83 @@ async function realizarLogin(req, res) {
     }
 }
 
+ // Verifica se o usuário possui uma sessão válida
+function verificarSessao(req, res) {
+    try {
+        // Obtém os cookies enviados pelo navegador
+        const cookies = req.headers.cookie || "";
+
+        const cookieSessao = cookies
+            .split(";")
+            .map(cookie => cookie.trim())
+            .find(cookie => cookie.startsWith("miaular_sessao="));
+
+        if (!cookieSessao) {
+            responder(res, 401, {
+                autenticado: false,
+                erro: "Usuário não autenticado."
+            });
+            return;
+        }
+
+        const token = cookieSessao.slice("miaular_sessao=".length);
+
+        // Verifica se o token tem o formato esperado
+        if (!/^[a-f0-9]{64}$/.test(token)) {
+            responder(res, 401, {
+                autenticado: false,
+                erro: "Sessão inválida."
+            });
+            return;
+        }
+
+        // Calcula o hash do token
+        const tokenHash = createHash("sha256")
+            .update(token)
+            .digest("hex");
+
+        // Procura uma sessão válida no SQLite
+        const sessao = banco.prepare(`
+            SELECT
+                usuarios.id,
+                usuarios.nome,
+                usuarios.email,
+                usuarios.perfil
+            FROM sessoes
+            INNER JOIN usuarios
+                ON usuarios.id = sessoes.usuario_id
+            WHERE sessoes.token_hash = ?
+              AND sessoes.expira_em > ?
+        `).get(tokenHash, Date.now());
+
+        if (!sessao) {
+            responder(res, 401, {
+                autenticado: false,
+                erro: "Sessão expirada ou inválida."
+            });
+            return;
+        }
+
+        // Retorna apenas os dados públicos necessários
+        responder(res, 200, {
+            autenticado: true,
+            usuario: {
+                id: sessao.id,
+                nome: sessao.nome,
+                email: sessao.email,
+                perfil: sessao.perfil
+            }
+        });
+
+    } catch (erro) {
+        console.error("Erro ao verificar sessão:", erro.message);
+
+        responder(res, 500, {
+            erro: "Não foi possível verificar a sessão."
+        });
+    }
+}
+
 // Cria o servidor do MiauLarr
 const servidor = http.createServer(async (req, res) => {
 
@@ -400,6 +477,11 @@ const servidor = http.createServer(async (req, res) => {
         // ROTA 3: Login de usuários
     if (url.pathname === "/api/login" && req.method === "POST") {
         await realizarLogin(req, res);
+        return;
+    }
+        // ROTA 4: Verificar usuário autenticado
+    if (url.pathname === "/api/sessao" && req.method === "GET") {
+        verificarSessao(req, res);
         return;
     }
 
