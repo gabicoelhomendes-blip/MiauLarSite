@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar gato | MiauLarr</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <div class="topo">
+            <h1>MiauLarr</h1>
+
+            <nav aria-label="Menu principal">
+                <a href="index.html">Início</a>
+                <a href="index.html#catalogo">Gatos para adoção</a>
+            </nav>
+        </div>
+        <p>Ajude um gatinho a encontrar um novo lar!</p>
+    </header>
+
+    <main>
+        <section class="cadastro">
+            <h2>Cadastrar um gato</h2>
+            <p>Preencha as informações do animal.</p>
+
+            <form id="form-gato">
+                <label for="nome">Nome do gato</label>
+                <input type="text" id="nome" name="nome"
+                       maxlength="100" required>
+
+                <label for="idade">Idade</label>
+                <input type="text" id="idade" name="idade"
+                       placeholder="Ex.: 2 anos" required>
+
+                <label for="sexo">Sexo</label>
+                <select id="sexo" name="sexo" required>
+                    <option value="">Selecione</option>
+                    <option value="Macho">Macho</option>
+                    <option value="Fêmea">Fêmea</option>
+                </select>
+
+                <label for="raca">Raça</label>
+                <input type="text" id="raca" name="raca"
+                       value="Sem raça definida (SRD)" required>
+
+                <label for="porte">Porte</label>
+                <select id="porte" name="porte" required>
+                    <option value="">Selecione</option>
+                    <option value="Pequeno">Pequeno</option>
+                    <option value="Médio">Médio</option>
+                    <option value="Grande">Grande</option>
+                </select>
+
+                <label for="localizacao">Localização</label>
+                <input type="text" id="localizacao" name="localizacao"
+                       placeholder="Ex.: Franca - SP" required>
+
+                <label for="saude">Informações de saúde</label>
+                <textarea id="saude" name="saude"
+                          rows="4" required></textarea>
+
+                <label for="imagem">Fotografia do gato</label>
+                <input type="file" id="imagem" name="imagem"
+                       accept=".jpg,.jpeg,.png,.webp" required>
+                <small>JPG, PNG ou WebP, até 1 MB.</small>
+
+                <button type="submit" class="botao"
+                        id="botao-cadastrar-gato">
+                    Cadastrar gato
+                </button>
+
+                <p id="mensagem-gato" role="status"
+                   aria-live="polite"></p>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>MiauLarr - Projeto acadêmico de adoção de gatos.</p>
+    </footer>
+    <script src="js/cadastrar-gato.js" defer></script>
+</body>
+</html>

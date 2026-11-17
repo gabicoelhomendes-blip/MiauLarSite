@@ -1,183 +1,29 @@
 
-// Dados demonstrativos dos gatos
-const gatos = {
-    mel: {
-        nome: "Mel",
-        idade: "2 anos",
-        sexo: "Fêmea",
-        raca: "Sem raça definida (SRD)",
-        porte: "Pequeno",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-        imagem: "cats/mel.jpg"
-    },
-
-    luna: {
-        nome: "Luna",
-        idade: "1 ano",
-        sexo: "Fêmea",
-        raca: "Sem raça definida (SRD)",
-        porte: "Pequeno",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-       
-        imagem: "cats/luna.jpg"
-    },
-
-    simba: {
-        nome: "Simba",
-        idade: "3 anos",
-        sexo: "Macho",
-        raca: "Sem raça definida (SRD)",
-        porte: "Médio",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-       
-        imagem: "cats/simba.jpg"
-    },
-
-    nina: {
-        nome: "Nina",
-        idade: "8 meses",
-        sexo: "Fêmea",
-        raca: "Sem raça definida (SRD)",
-        porte: "Pequeno",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-
-        imagem: "cats/nina.png"
-    },
-
-    thor: {
-        nome: "Thor",
-        idade: "2 anos",
-        sexo: "Macho",
-        raca: "Sem raça definida (SRD)",
-        porte: "Médio",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-
-        imagem: "cats/thor.png"
-    },
-
-    amora: {
-        nome: "Amora",
-        idade: "1 ano",
-        sexo: "Fêmea",
-        raca: "Sem raça definida (SRD)",
-        porte: "Pequeno",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-
-        imagem: "cats/amora.png"
-    },
-
-    oliver: {
-        nome: "Oliver",
-        idade: "4 meses",
-        sexo: "Macho",
-        raca: "Sem raça definida (SRD)",
-        porte: "Pequeno",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-
-        imagem: "cats/oliver.png"
-    },
-
-    milk: {
-        nome: "Milk",
-        idade: "6 meses",
-        sexo: "Fêmea",
-        raca: "Sem raça definida (SRD)",
-        porte: "Pequeno",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-
-        imagem: "cats/milk.png"
-    },
-
-    luck: {
-        nome: "Luck",
-        idade: "1 ano",
-        sexo: "Fêmea",
-        raca: "Sem raça definida (SRD)",
-        porte: "Pequeno",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-
-        imagem: "cats/luck.png"
-    },
-
-    frida: {
-        nome: "Frida",
-        idade: "2 anos",
-        sexo: "Fêmea",
-        raca: "Sem raça definida (SRD)",
-        porte: "Pequeno",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-
-        imagem: "cats/frida.png"
-    },
-
-    bento: {
-        nome: "Bento",
-        idade: "1 ano",
-        sexo: "Macho",
-        raca: "Sem raça definida (SRD)",
-        porte: "Médio",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-
-        imagem: "cats/bento.png"
-    },
-
-    mia: {
-        nome: "Mia",
-        idade: "2 anos",
-        sexo: "Fêmea",
-        raca: "Sem raça definida (SRD)",
-        porte: "Pequeno",
-        localizacao: "Franca - SP",
-        saude: "A confirmar com o responsável.",
-        status: "Disponível",
-        imagem: "cats/mia.png"
-    }
-};
-
-
-
-
-
-
-
-// Identifica qual gato foi selecionado
 const parametros = new URLSearchParams(window.location.search);
 const idGato = parametros.get("gato");
-const gato = gatos[idGato];
 
 const nomeGato = document.getElementById("nome-gato");
 const imagemGato = document.getElementById("imagem-gato");
 const informacoes = document.getElementById("informacoes-detalhes");
 
-// Exibe as informações do gato escolhido
-if (gato) {
+// Exibe uma mensagem quando o gato não é encontrado
+function mostrarErro(mensagem) {
+    nomeGato.textContent = "Gato não encontrado";
+    imagemGato.hidden = true;
+    informacoes.textContent = mensagem;
+}
+
+// Apresenta os dados do gato selecionado
+function mostrarGato(gato) {
     document.title = `${gato.nome} | MiauLarr`;
 
-    nomeGato.textContent = `Conheça a ${gato.nome}`;
+    nomeGato.textContent = `Conheça ${gato.nome}`;
+
     imagemGato.src = gato.imagem;
-    imagemGato.alt = `Foto da gata ${gato.nome}`;
+    imagemGato.alt = `Foto de ${gato.nome}`;
+    imagemGato.hidden = false;
+
+    informacoes.replaceChildren();
 
     const dados = [
         ["Nome", gato.nome],
@@ -190,18 +36,67 @@ if (gato) {
         ["Situação", gato.status]
     ];
 
-    dados.forEach(([campo, valor]) => {
+    for (const [campo, valor] of dados) {
         const paragrafo = document.createElement("p");
         const titulo = document.createElement("strong");
 
         titulo.textContent = `${campo}: `;
-        paragrafo.append(titulo, document.createTextNode(valor));
+        paragrafo.append(
+            titulo,
+            document.createTextNode(valor ?? "Não informado")
+        );
 
         informacoes.appendChild(paragrafo);
-    });
-} else {
-    nomeGato.textContent = "Gato não encontrado";
-    imagemGato.hidden = true;
-    informacoes.textContent =
-        "Não foi possível encontrar as informações desse gato.";
+    }
 }
+
+// Busca os dados diretamente do SQLite por meio da API
+async function carregarDetalhes() {
+    if (!idGato) {
+        mostrarErro("Nenhum gato foi selecionado.");
+        return;
+    }
+
+    try {
+        const resposta = await fetch("/api/gatos");
+
+        if (!resposta.ok) {
+            throw new Error("Não foi possível consultar os gatos.");
+        }
+
+        const gatos = await resposta.json();
+
+        if (!Array.isArray(gatos)) {
+            throw new Error("Resposta inválida do servidor.");
+        }
+
+        // Aceita o ID do banco e também os links antigos
+        const gato = gatos.find((item) => {
+            const nomeImagem = item.imagem
+                .split("/")
+                .pop()
+                .replace(/\.[^.]+$/, "");
+
+            return String(item.id) === idGato ||
+                   nomeImagem === idGato;
+        });
+
+        if (!gato) {
+            mostrarErro(
+                "Não foi possível encontrar as informações desse gato."
+            );
+            return;
+        }
+
+        mostrarGato(gato);
+
+    } catch (erro) {
+        console.error("Erro ao carregar detalhes:", erro);
+
+        mostrarErro(
+            "Não foi possível carregar as informações. Tente novamente."
+        );
+    }
+}
+
+carregarDetalhes();

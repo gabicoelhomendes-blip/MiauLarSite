@@ -49,13 +49,8 @@ function criarCardGato(gato) {
     botao.className = "botao";
     botao.textContent = "Ver detalhes";
 
-    // Usa o nome do arquivo da imagem como identificador
-    const identificador = gato.imagem
-        .split("/")
-        .pop()
-        .replace(/\.[^.]+$/, "");
-
-    botao.href = `detalhes.html?gato=${encodeURIComponent(identificador)}`;
+    // Usa o ID do gato no banco de dados
+    botao.href = `detalhes.html?gato=${gato.id}`;
 
     paragrafoBotao.appendChild(botao);
     informacoes.appendChild(paragrafoBotao);

@@ -3,3 +3,5 @@ node_modules/
 *.sqlite-shm
 *.sqlite-wal
 .env
+# Fotografias enviadas pelos usuários
+/cats/uploads/

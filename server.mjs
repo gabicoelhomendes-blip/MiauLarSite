@@ -1,6 +1,6 @@
 
 import http from "node:http";
-import { readFile } from "node:fs/promises";
+import { readFile, writeFile, mkdir, unlink } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import bcrypt from "bcrypt";
@@ -64,6 +64,33 @@ async function receberDados(req) {
         return JSON.parse(conteudo);
     } catch {
         const erro = new Error("JSON inválido.");
+        erro.status = 400;
+        throw erro;
+    }
+}
+// Recebe os dados e a imagem de um gato
+async function receberDadosGato(req) {
+    const partes = [];
+    let tamanho = 0;
+    const limite = 1500000;
+
+    for await (const parte of req) {
+        tamanho += parte.length;
+
+        if (tamanho > limite) {
+            const erro = new Error("Arquivo muito grande.");
+            erro.status = 413;
+            throw erro;
+        }
+
+        partes.push(parte);
+    }
+
+    try {
+        const conteudo = Buffer.concat(partes).toString("utf8");
+        return JSON.parse(conteudo);
+    } catch {
+        const erro = new Error("Dados de cadastro inválidos.");
         erro.status = 400;
         throw erro;
     }
@@ -200,7 +227,8 @@ async function entregarArquivo(req, res, url) {
             "index.html",
             "cadastro.html",
             "detalhes.html",
-            "login.html"
+            "login.html",
+            "cadastrar-gato.html"
         ];
 
         const pastaPermitida =
@@ -552,6 +580,195 @@ function exigirPerfil(req, res, perfisPermitidos) {
     return usuario;
 }
 
+ // Cadastra um gato e salva sua fotografia
+async function cadastrarGato(req, res, usuario) {
+    let caminhoImagem = null;
+
+    try {
+        if (!req.headers["content-type"]?.startsWith("application/json")) {
+            responder(res, 415, {
+                erro: "Formato de envio inválido."
+            });
+            return;
+        }
+
+        const dados = await receberDadosGato(req);
+
+        const campos = [
+            "nome", "idade", "sexo", "raca",
+            "porte", "localizacao", "saude"
+        ];
+
+        for (const campo of campos) {
+            if (
+                typeof dados[campo] !== "string" ||
+                !dados[campo].trim()
+            ) {
+                responder(res, 400, {
+                    erro: `Preencha corretamente o campo ${campo}.`
+                });
+                return;
+            }
+        }
+
+        const limites = {
+            nome: 100,
+            idade: 30,
+            raca: 100,
+            localizacao: 120,
+            saude: 1000
+        };
+
+        for (const [campo, limite] of Object.entries(limites)) {
+            if (dados[campo].trim().length > limite) {
+                responder(res, 400, {
+                    erro: `O campo ${campo} ultrapassa o limite permitido.`
+                });
+                return;
+            }
+        }
+
+        if (
+            !["Macho", "Fêmea"].includes(dados.sexo) ||
+            !["Pequeno", "Médio", "Grande"].includes(dados.porte)
+        ) {
+            responder(res, 400, {
+                erro: "Sexo ou porte inválido."
+            });
+            return;
+        }
+
+        const total = banco.prepare(`
+            SELECT COUNT(*) AS total FROM gatos
+        `).get().total;
+
+        if (total >= 20) {
+            responder(res, 409, {
+                erro: "O limite de 20 gatos foi atingido."
+            });
+            return;
+        }
+
+        // A fotografia é enviada em Base64 pelo formulário
+        if (typeof dados.imagem !== "string") {
+            responder(res, 400, {
+                erro: "Selecione uma fotografia."
+            });
+            return;
+        }
+
+        const resultadoImagem = dados.imagem.match(
+            /^data:image\/(jpeg|png|webp);base64,([A-Za-z0-9+/]+={0,2})$/
+        );
+
+        if (!resultadoImagem) {
+            responder(res, 400, {
+                erro: "Envie uma imagem JPG, PNG ou WebP válida."
+            });
+            return;
+        }
+
+        const tipo = resultadoImagem[1];
+        const base64 = resultadoImagem[2];
+        const imagem = Buffer.from(base64, "base64");
+
+        if (imagem.length === 0 || imagem.length > 1024 * 1024) {
+            responder(res, 413, {
+                erro: "A fotografia deve ter no máximo 1 MB."
+            });
+            return;
+        }
+
+        // Confere a assinatura real do arquivo
+        const jpeg =
+            imagem.length >= 3 &&
+            imagem[0] === 0xff &&
+            imagem[1] === 0xd8 &&
+            imagem[2] === 0xff;
+
+        const png =
+            imagem.length >= 8 &&
+            imagem.subarray(0, 8).equals(
+                Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])
+            );
+
+        const webp =
+            imagem.length >= 12 &&
+            imagem.toString("ascii", 0, 4) === "RIFF" &&
+            imagem.toString("ascii", 8, 12) === "WEBP";
+
+        const formatoValido =
+            (tipo === "jpeg" && jpeg) ||
+            (tipo === "png" && png) ||
+            (tipo === "webp" && webp);
+
+        if (!formatoValido) {
+            responder(res, 400, {
+                erro: "O conteúdo da fotografia é inválido."
+            });
+            return;
+        }
+
+        const extensao = tipo === "jpeg" ? "jpg" : tipo;
+        const nomeImagem = `${randomBytes(16).toString("hex")}.${extensao}`;
+
+        const pastaImagens = path.join(
+            pastaProjeto, "cats", "uploads"
+        );
+
+        await mkdir(pastaImagens, { recursive: true });
+
+        caminhoImagem = path.join(pastaImagens, nomeImagem);
+        await writeFile(caminhoImagem, imagem, { flag: "wx" });
+
+        const imagemBanco = `cats/uploads/${nomeImagem}`;
+
+        const resultado = banco.prepare(`
+            INSERT INTO gatos (
+                nome, idade, sexo, raca, porte,
+                localizacao, saude, imagem,
+                status, responsavel_id
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `).run(
+            dados.nome.trim(),
+            dados.idade.trim(),
+            dados.sexo,
+            dados.raca.trim(),
+            dados.porte,
+            dados.localizacao.trim(),
+            dados.saude.trim(),
+            imagemBanco,
+            "Disponível",
+            usuario.id
+        );
+
+        responder(res, 201, {
+            mensagem: "Gato cadastrado com sucesso!",
+            id: Number(resultado.lastInsertRowid)
+        });
+
+    } catch (erro) {
+        // Remove a fotografia se o cadastro falhar
+        if (caminhoImagem) {
+            await unlink(caminhoImagem).catch(() => {});
+        }
+
+        console.error("Erro ao cadastrar gato:", erro.message);
+
+        if (erro.status === 400 || erro.status === 413) {
+            responder(res, erro.status, {
+                erro: erro.message
+            });
+            return;
+        }
+
+        responder(res, 500, {
+            erro: "Não foi possível cadastrar o gato."
+        });
+    }
+}
+
 // Cria o servidor do MiauLarr
 const servidor = http.createServer(async (req, res) => {
 
@@ -599,6 +816,24 @@ const servidor = http.createServer(async (req, res) => {
                 erro: "Não foi possível carregar os gatos."
             });
         }
+
+        return;
+    }
+        // ROTA: Cadastrar um novo gato
+    if (url.pathname === "/api/gatos" && req.method === "POST") {
+        const usuario = exigirPerfil(
+            req,
+            res,
+            ["responsavel", "administrador"]
+        );
+
+        if (!usuario) {
+            return;
+        }
+
+        // O salvamento dos dados e da fotografia será
+        // implementado na próxima etapa.
+    await cadastrarGato(req, res, usuario);
 
         return;
     }
