@@ -440,6 +440,57 @@ function verificarSessao(req, res) {
     }
 }
 
+
+ // Encerra a sessão do usuário
+function realizarLogout(req, res) {
+    try {
+        const cookies = req.headers.cookie || "";
+
+        const cookieSessao = cookies
+            .split(";")
+            .map(cookie => cookie.trim())
+            .find(cookie => cookie.startsWith("miaular_sessao="));
+
+        if (cookieSessao) {
+            const token = cookieSessao.slice(
+                "miaular_sessao=".length
+            );
+
+            if (/^[a-f0-9]{64}$/.test(token)) {
+                const tokenHash = createHash("sha256")
+                    .update(token)
+                    .digest("hex");
+
+                banco.prepare(`
+                    DELETE FROM sessoes
+                    WHERE token_hash = ?
+                `).run(tokenHash);
+            }
+        }
+
+        // Apaga o cookie do navegador
+        const seguro = process.env.NODE_ENV === "production"
+            ? "; Secure"
+            : "";
+
+        res.setHeader(
+            "Set-Cookie",
+            `miaular_sessao=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0${seguro}`
+        );
+
+        responder(res, 200, {
+            mensagem: "Sessão encerrada com sucesso."
+        });
+
+    } catch (erro) {
+        console.error("Erro no logout:", erro.message);
+
+        responder(res, 500, {
+            erro: "Não foi possível encerrar a sessão."
+        });
+    }
+}
+
 // Cria o servidor do MiauLarr
 const servidor = http.createServer(async (req, res) => {
 
@@ -482,6 +533,11 @@ const servidor = http.createServer(async (req, res) => {
         // ROTA 4: Verificar usuário autenticado
     if (url.pathname === "/api/sessao" && req.method === "GET") {
         verificarSessao(req, res);
+        return;
+    }
+        // ROTA 5: Encerrar sessão
+    if (url.pathname === "/api/logout" && req.method === "POST") {
+        realizarLogout(req, res);
         return;
     }
 
