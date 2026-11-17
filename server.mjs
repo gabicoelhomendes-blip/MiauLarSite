@@ -228,7 +228,10 @@ async function entregarArquivo(req, res, url) {
             "cadastro.html",
             "detalhes.html",
             "login.html",
-            "cadastrar-gato.html"
+            "cadastrar-gato.html",
+            "gerenciar-gatos.html",
+            "editar-gato.html"
+
         ];
 
         const pastaPermitida =
@@ -768,6 +771,101 @@ async function cadastrarGato(req, res, usuario) {
         });
     }
 }
+// Edita os dados de um gato cadastrado
+async function editarGato(req, res, usuario, idGato) {
+    try {
+        const gato = banco.prepare(
+            "SELECT * FROM gatos WHERE id = ?"
+        ).get(idGato);
+
+        if (!gato) {
+            responder(res, 404, {
+                erro: "Gato não encontrado."
+            });
+            return;
+        }
+
+        // Administradores podem editar todos os gatos.
+        // Responsáveis só podem editar os próprios.
+        if (
+            usuario.perfil !== "administrador" &&
+            gato.responsavel_id !== usuario.id
+        ) {
+            responder(res, 403, {
+                erro: "Você não tem permissão para editar este gato."
+            });
+            return;
+        }
+
+        const dados = await receberDados(req);
+
+        const campos = [
+            "nome", "idade", "sexo", "raca",
+            "porte", "localizacao", "saude"
+        ];
+
+        for (const campo of campos) {
+            if (
+                typeof dados[campo] !== "string" ||
+                !dados[campo].trim()
+            ) {
+                responder(res, 400, {
+                    erro: `Preencha corretamente o campo ${campo}.`
+                });
+                return;
+            }
+        }
+
+        if (
+            !["Macho", "Fêmea"].includes(dados.sexo) ||
+            !["Pequeno", "Médio", "Grande"].includes(dados.porte)
+        ) {
+            responder(res, 400, {
+                erro: "Sexo ou porte inválido."
+            });
+            return;
+        }
+
+        banco.prepare(`
+            UPDATE gatos
+            SET nome = ?,
+                idade = ?,
+                sexo = ?,
+                raca = ?,
+                porte = ?,
+                localizacao = ?,
+                saude = ?
+            WHERE id = ?
+        `).run(
+            dados.nome.trim(),
+            dados.idade.trim(),
+            dados.sexo,
+            dados.raca.trim(),
+            dados.porte,
+            dados.localizacao.trim(),
+            dados.saude.trim(),
+            idGato
+        );
+
+        responder(res, 200, {
+            mensagem: "Informações do gato atualizadas com sucesso!"
+        });
+
+    } catch (erro) {
+        console.error("Erro ao editar gato:", erro.message);
+
+        if (erro.status === 400 || erro.status === 413) {
+            responder(res, erro.status, {
+                erro: erro.message
+            });
+            return;
+        }
+
+        responder(res, 500, {
+            erro: "Não foi possível editar o gato."
+        });
+    }
+}
 
 // Cria o servidor do MiauLarr
 const servidor = http.createServer(async (req, res) => {
@@ -830,11 +928,81 @@ const servidor = http.createServer(async (req, res) => {
         if (!usuario) {
             return;
         }
+            await cadastrarGato(req, res, usuario);
+    return;
+}
+    // ROTA: Listar gatos que o usuário pode gerenciar
+    if (url.pathname === "/api/meus-gatos" && req.method === "GET") {
+        const usuario = exigirPerfil(
+            req,
+            res,
+            ["responsavel", "administrador"]
+        );
 
-        // O salvamento dos dados e da fotografia será
-        // implementado na próxima etapa.
-    await cadastrarGato(req, res, usuario);
+        if (!usuario) {
+            return;
+        }
 
+        try {
+            let gatos;
+
+            if (usuario.perfil === "administrador") {
+                gatos = banco.prepare(`
+                    SELECT
+                        id, nome, idade, sexo, raca, porte,
+                        localizacao, saude, imagem, status,
+                        responsavel_id
+                    FROM gatos
+                    ORDER BY id
+                `).all();
+            } else {
+                gatos = banco.prepare(`
+                    SELECT
+                        id, nome, idade, sexo, raca, porte,
+                        localizacao, saude, imagem, status,
+                        responsavel_id
+                    FROM gatos
+                    WHERE responsavel_id = ?
+                    ORDER BY id
+                `).all(usuario.id);
+            }
+
+            responder(res, 200, gatos);
+
+        } catch (erro) {
+            console.error("Erro ao listar gatos:", erro.message);
+
+            responder(res, 500, {
+                erro: "Não foi possível carregar seus gatos."
+            });
+        }
+
+        return;
+    }
+    // ROTA: Editar informações de um gato
+    const rotaEdicao = url.pathname.match(/^\/api\/gatos\/([0-9]+)$/);
+
+    if (rotaEdicao && req.method === "PUT") {
+        const usuario = exigirPerfil(
+            req,
+            res,
+            ["responsavel", "administrador"]
+        );
+
+        if (!usuario) {
+            return;
+        }
+
+        const idGato = Number(rotaEdicao[1]);
+
+        if (!Number.isSafeInteger(idGato) || idGato <= 0) {
+            responder(res, 400, {
+                erro: "Identificador do gato inválido."
+            });
+            return;
+        }
+
+        await editarGato(req, res, usuario, idGato);
         return;
     }
     // ROTA 2: Cadastrar usuários

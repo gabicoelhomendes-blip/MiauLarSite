@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar gato | MiauLarr</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/editar-gato.js" defer></script>
+</head>
+<body>
+    <header>
+        <div class="topo">
+            <h1>MiauLarr</h1>
+            <nav aria-label="Menu principal">
+                <a href="index.html">Início</a>
+                <a href="gerenciar-gatos.html">Gerenciar gatos</a>
+            </nav>
+        </div>
+        <p>Atualize as informações dos seus gatos.</p>
+    </header>
+
+    <main>
+        <section class="cadastro">
+            <h2>Editar gato</h2>
+            <p id="mensagem-edicao" role="status"
+               aria-live="polite">Carregando informações...</p>
+
+            <form id="form-editar-gato" hidden>
+                <label for="nome">Nome</label>
+                <input type="text" id="nome" maxlength="100" required>
+
+                <label for="idade">Idade</label>
+                <input type="text" id="idade" maxlength="30" required>
+
+                <label for="sexo">Sexo</label>
+                <select id="sexo" required>
+                    <option value="Macho">Macho</option>
+                    <option value="Fêmea">Fêmea</option>
+                </select>
+
+                <label for="raca">Raça</label>
+                <input type="text" id="raca" maxlength="100" required>
+
+                <label for="porte">Porte</label>
+                <select id="porte" required>
+                    <option value="Pequeno">Pequeno</option>
+                    <option value="Médio">Médio</option>
+                    <option value="Grande">Grande</option>
+                </select>
+
+                <label for="localizacao">Localização</label>
+                <input type="text" id="localizacao"
+                       maxlength="120" required>
+
+                <label for="saude">Informações de saúde</label>
+                <textarea id="saude" maxlength="1000"
+                          rows="4" required></textarea>
+
+                <button type="submit" class="botao">
+                    Salvar alterações
+                </button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>MiauLarr - Projeto acadêmico de adoção de gatos.</p>
+    </footer>
+        <script type="module" src="js/editar-gato.js"></script>
+</body>
+</html>

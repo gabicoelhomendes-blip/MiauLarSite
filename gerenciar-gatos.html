@@ -1,0 +1,45 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar gatos | MiauLarr</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <header>
+        <div class="topo">
+            <h1>MiauLarr</h1>
+            <nav aria-label="Menu principal">
+                <a href="index.html">Início</a>
+                <a href="index.html#catalogo">Catálogo</a>
+                <a href="cadastrar-gato.html">Cadastrar gato</a>
+            </nav>
+        </div>
+        <p>Gerencie os gatos disponíveis para adoção.</p>
+    </header>
+
+    <main>
+        <section class="cadastro">
+            <h2>Gerenciar gatos</h2>
+            <p>Selecione um gato para editar suas informações.</p>
+
+            <div id="lista-gerenciamento">
+                <p>Carregando gatos...</p>
+            </div>
+
+            <p id="mensagem-gerenciamento"
+               role="status"
+               aria-live="polite"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>MiauLarr - Projeto acadêmico de adoção de gatos.</p>
+    </footer>
+
+    <script src="js/gerenciar-gatos.js" defer></script>
+</body>
+</html>
