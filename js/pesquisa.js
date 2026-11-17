@@ -2,7 +2,6 @@
 const campoPesquisa = document.getElementById("campo-pesquisa");
 const filtroSexo = document.getElementById("filtro-sexo");
 const filtroPorte = document.getElementById("filtro-porte");
-const cardsGatos = document.querySelectorAll(".card-gato");
 const resultadoPesquisa = document.getElementById("resultado-pesquisa");
 const botaoLimpar = document.getElementById("limpar-filtros");
 
@@ -34,6 +33,9 @@ function obterInformacao(card, campo) {
 
 // Filtra os gatos conforme as opções escolhidas
 function pesquisarGatos() {
+    const cardsGatos = document.querySelectorAll(".card-gato");
+
+    
     const pesquisa = normalizarTexto(campoPesquisa.value);
     const sexoSelecionado = filtroSexo.value;
     const porteSelecionado = filtroPorte.value;

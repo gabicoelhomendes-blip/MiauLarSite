@@ -580,7 +580,28 @@ const servidor = http.createServer(async (req, res) => {
 
         return;
     }
+    // ROTA: Listar gatos cadastrados
+    if (url.pathname === "/api/gatos" && req.method === "GET") {
+        try {
+            const gatos = banco.prepare(`
+                SELECT
+                    id, nome, idade, sexo, raca, porte,
+                    localizacao, saude, imagem, status
+                FROM gatos
+                ORDER BY id
+            `).all();
 
+            responder(res, 200, gatos);
+        } catch (erro) {
+            console.error("Erro ao listar gatos:", erro.message);
+
+            responder(res, 500, {
+                erro: "Não foi possível carregar os gatos."
+            });
+        }
+
+        return;
+    }
     // ROTA 2: Cadastrar usuários
     if (url.pathname === "/api/cadastro" && req.method === "POST") {
         await cadastrarUsuario(req, res);
