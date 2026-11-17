@@ -480,3 +480,78 @@ footer {
     text-align: center;
     font-weight: bold;
 }
+/* Formulário compacto de edição de gatos */
+body:has(#form-editar-gato) header {
+    padding: 12px 24px;
+}
+
+body:has(#form-editar-gato) main {
+    padding: 12px 16px;
+}
+
+body:has(#form-editar-gato) .cadastro {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 18px 24px;
+}
+
+#form-editar-gato {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+    row-gap: 5px;
+}
+
+#form-editar-gato label {
+    display: block;
+    margin: 0 0 3px;
+    font-size: 13px;
+}
+
+#form-editar-gato input,
+#form-editar-gato select,
+#form-editar-gato textarea {
+    width: 100%;
+    padding: 7px 10px;
+    font-size: 13px;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+#form-editar-gato textarea {
+    height: 55px;
+    resize: vertical;
+}
+
+#form-editar-gato button {
+    grid-column: 1 / -1;
+    padding: 10px;
+}
+
+/* Mantém o formulário confortável no celular */
+@media (max-width: 600px) {
+    #form-editar-gato {
+        display: block;
+    }
+}
+/* Ajuste final do formulário de edição */
+body:has(#form-editar-gato) .cadastro {
+    max-width: 760px;
+    padding: 16px 24px;
+}
+
+#form-editar-gato label {
+    font-size: 14px;
+}
+
+#form-editar-gato input,
+#form-editar-gato select,
+#form-editar-gato textarea {
+    font-size: 14px;
+    padding: 8px 12px;
+}
+
+#form-editar-gato button {
+    padding: 11px;
+    font-size: 14px;
+}

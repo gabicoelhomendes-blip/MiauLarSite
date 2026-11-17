@@ -801,7 +801,7 @@ async function editarGato(req, res, usuario, idGato) {
 
         const campos = [
             "nome", "idade", "sexo", "raca",
-            "porte", "localizacao", "saude"
+            "porte", "localizacao", "saude", "status"
         ];
 
         for (const campo of campos) {
@@ -825,6 +825,18 @@ async function editarGato(req, res, usuario, idGato) {
             });
             return;
         }
+        const statusPermitidos = [
+            "Disponível",
+            "Em adoção",
+            "Adotado"
+        ];
+
+        if (!statusPermitidos.includes(dados.status)) {
+            responder(res, 400, {
+                erro: "Situação do gato inválida."
+            });
+            return;
+        }
 
         banco.prepare(`
             UPDATE gatos
@@ -834,7 +846,8 @@ async function editarGato(req, res, usuario, idGato) {
                 raca = ?,
                 porte = ?,
                 localizacao = ?,
-                saude = ?
+                saude = ?,
+                status = ?
             WHERE id = ?
         `).run(
             dados.nome.trim(),
@@ -844,6 +857,7 @@ async function editarGato(req, res, usuario, idGato) {
             dados.porte,
             dados.localizacao.trim(),
             dados.saude.trim(),
+            dados.status,
             idGato
         );
 

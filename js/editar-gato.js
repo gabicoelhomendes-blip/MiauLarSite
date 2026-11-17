@@ -7,7 +7,7 @@ const botaoSalvar = formulario.querySelector('button[type="submit"]');
 
 const campos = [
     "nome", "idade", "sexo", "raca",
-    "porte", "localizacao", "saude"
+    "porte", "localizacao", "saude", "status"
 ];
 
 let gatoOriginal = null;
