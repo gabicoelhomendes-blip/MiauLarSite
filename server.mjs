@@ -5,9 +5,22 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import bcrypt from "bcrypt";
 import banco from "./database.mjs";
+import { randomBytes, createHash } from "node:crypto";
 
 // Configurações do MiauLarr
 const porta = 3000;
+
+ // Guarda as sessões dos usuários no SQLite
+banco.exec(`
+    CREATE TABLE IF NOT EXISTS sessoes (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        usuario_id INTEGER NOT NULL,
+        token_hash TEXT NOT NULL UNIQUE,
+        expira_em INTEGER NOT NULL,
+        FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+    )
+`);
+
 const pastaProjeto = path.dirname(fileURLToPath(import.meta.url));
 
 // Tipos de arquivos do site
@@ -229,6 +242,127 @@ async function entregarArquivo(req, res, url) {
     }
 }
 
+ // Controle básico de tentativas de login
+const tentativasLogin = new Map();
+
+async function realizarLogin(req, res) {
+    const ip = req.socket.remoteAddress || "desconhecido";
+    const agora = Date.now();
+    const janela = 15 * 60 * 1000;
+
+    const controle = tentativasLogin.get(ip);
+
+    if (controle && agora < controle.inicio + janela) {
+        if (controle.quantidade >= 15) {
+            responder(res, 429, {
+                erro: "Muitas tentativas. Tente novamente mais tarde."
+            });
+            return;
+        }
+
+        controle.quantidade++;
+    } else {
+        tentativasLogin.set(ip, {
+            inicio: agora,
+            quantidade: 1
+        });
+    }
+
+    try {
+        const dados = await receberDados(req);
+
+        if (
+            !dados ||
+            typeof dados.email !== "string" ||
+            typeof dados.senha !== "string"
+        ) {
+            responder(res, 400, {
+                erro: "Informe seu e-mail e sua senha."
+            });
+            return;
+        }
+
+        const email = dados.email.trim().toLowerCase();
+        const senha = dados.senha;
+
+        if (
+            !email ||
+            email.length > 254 ||
+            !senha ||
+            Buffer.byteLength(senha, "utf8") > 72
+        ) {
+            responder(res, 400, {
+                erro: "Dados de login inválidos."
+            });
+            return;
+        }
+
+        // Procura o usuário cadastrado
+        const usuario = banco.prepare(`
+            SELECT id, nome, email, senha_hash, perfil
+            FROM usuarios
+            WHERE email = ?
+        `).get(email);
+
+        // Confere a senha protegida com BCrypt
+        const senhaCorreta = usuario
+            ? await bcrypt.compare(senha, usuario.senha_hash)
+            : false;
+
+        if (!usuario || !senhaCorreta) {
+            responder(res, 401, {
+                erro: "E-mail ou senha incorretos."
+            });
+            return;
+        }
+
+        // Cria uma sessão com validade de 8 horas
+        const token = randomBytes(32).toString("hex");
+
+        const tokenHash = createHash("sha256")
+            .update(token)
+            .digest("hex");
+
+        const validade = Date.now() + 8 * 60 * 60 * 1000;
+
+        banco.prepare(`
+            INSERT INTO sessoes (usuario_id, token_hash, expira_em)
+            VALUES (?, ?, ?)
+        `).run(usuario.id, tokenHash, validade);
+
+        const cookieSeguro =
+            process.env.NODE_ENV === "production" ? "; Secure" : "";
+
+        res.setHeader(
+            "Set-Cookie",
+            `miaular_sessao=${token}; HttpOnly; SameSite=Lax; Path=/; Max-Age=28800${cookieSeguro}`
+        );
+
+        responder(res, 200, {
+            mensagem: "Login realizado com sucesso.",
+            usuario: {
+                id: usuario.id,
+                nome: usuario.nome,
+                perfil: usuario.perfil
+            }
+        });
+
+    } catch (erro) {
+        if (erro.status === 400 || erro.status === 413) {
+            responder(res, erro.status, {
+                erro: erro.message
+            });
+            return;
+        }
+
+        console.error("Erro no login:", erro.message);
+
+        responder(res, 500, {
+            erro: "Não foi possível realizar o login."
+        });
+    }
+}
+
 // Cria o servidor do MiauLarr
 const servidor = http.createServer(async (req, res) => {
 
@@ -261,6 +395,11 @@ const servidor = http.createServer(async (req, res) => {
     // ROTA 2: Cadastrar usuários
     if (url.pathname === "/api/cadastro" && req.method === "POST") {
         await cadastrarUsuario(req, res);
+        return;
+    }
+        // ROTA 3: Login de usuários
+    if (url.pathname === "/api/login" && req.method === "POST") {
+        await realizarLogin(req, res);
         return;
     }
 
