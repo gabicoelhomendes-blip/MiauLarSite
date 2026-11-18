@@ -842,6 +842,18 @@ async function editarGato(req, res, usuario, idGato) {
             return;
         }
 
+        // Impede que um gato adotado volte para outra situação
+        if (
+            gato.status === "Adotado" &&
+            dados.status !== "Adotado"
+        ) {
+            responder(res, 409, {
+                erro: "Um gato adotado não pode voltar para outra situação."
+            });
+            return;
+        }
+
+
         banco.prepare(`
             UPDATE gatos
             SET nome = ?,
