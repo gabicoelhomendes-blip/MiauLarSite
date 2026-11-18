@@ -231,7 +231,8 @@ async function entregarArquivo(req, res, url) {
             "cadastrar-gato.html",
             "gerenciar-gatos.html",
             "editar-gato.html",
-            "minhas-solicitacoes.html"
+            "minhas-solicitacoes.html",
+            "analisar-solicitacoes.html"
 
         ];
 
@@ -1229,7 +1230,207 @@ if (url.pathname === "/api/solicitacoes" && req.method === "POST") {
         return;
     }
 
+    // ROTA: Aprovar ou recusar uma solicitação
+    const rotaAnalise = url.pathname.match(
+        /^\/api\/solicitacoes\/([0-9]+)$/
+    );
+
+    if (rotaAnalise && req.method === "PATCH") {
+        const usuario = exigirPerfil(
+            req,
+            res,
+            ["responsavel", "administrador"]
+        );
+
+        if (!usuario) {
+            return;
+        }
+
+        const idSolicitacao = Number(rotaAnalise[1]);
+
+        if (!Number.isSafeInteger(idSolicitacao) || idSolicitacao <= 0) {
+            responder(res, 400, {
+                erro: "Identificador inválido."
+            });
+            return;
+        }
+
+        try {
+            const dados = await receberDados(req);
+            const decisao = dados?.status;
+
+            if (!["Aprovada", "Recusada"].includes(decisao)) {
+                responder(res, 400, {
+                    erro: "Escolha Aprovar ou Recusar."
+                });
+                return;
+            }
+
+            const solicitacao = banco.prepare(`
+                SELECT
+                    s.id,
+                    s.gato_id,
+                    s.status,
+                    g.responsavel_id,
+                    g.status AS status_gato
+                FROM solicitacoes s
+                INNER JOIN gatos g ON g.id = s.gato_id
+                WHERE s.id = ?
+            `).get(idSolicitacao);
+
+            if (!solicitacao) {
+                responder(res, 404, {
+                    erro: "Solicitação não encontrada."
+                });
+                return;
+            }
+
+            if (
+                usuario.perfil !== "administrador" &&
+                solicitacao.responsavel_id !== usuario.id
+            ) {
+                responder(res, 403, {
+                    erro: "Você não pode analisar esta solicitação."
+                });
+                return;
+            }
+
+            if (solicitacao.status !== "Pendente") {
+                responder(res, 409, {
+                    erro: "Esta solicitação já foi analisada."
+                });
+                return;
+            }
+
+            if (solicitacao.status_gato !== "Disponível") {
+                responder(res, 409, {
+                    erro: "Este gato não está disponível para adoção."
+                });
+                return;
+            }
+
+            // Mantém as atualizações do banco na mesma transação.
+            banco.exec("BEGIN IMMEDIATE");
+
+            try {
+                banco.prepare(`
+                    UPDATE solicitacoes
+                    SET status = ?
+                    WHERE id = ?
+                `).run(decisao, idSolicitacao);
+
+                if (decisao === "Aprovada") {
+                    banco.prepare(`
+                        UPDATE gatos
+                        SET status = 'Adotado'
+                        WHERE id = ?
+                    `).run(solicitacao.gato_id);
+
+                    // Recusa os demais pedidos pendentes do mesmo gato.
+                    banco.prepare(`
+                        UPDATE solicitacoes
+                        SET status = 'Recusada'
+                        WHERE gato_id = ?
+                          AND id <> ?
+                          AND status = 'Pendente'
+                    `).run(solicitacao.gato_id, idSolicitacao);
+                }
+
+                banco.exec("COMMIT");
+
+            } catch (erro) {
+                banco.exec("ROLLBACK");
+                throw erro;
+            }
+
+            responder(res, 200, {
+                mensagem: decisao === "Aprovada"
+                    ? "Solicitação aprovada com sucesso!"
+                    : "Solicitação recusada com sucesso!"
+            });
+
+        } catch (erro) {
+            if (erro.status === 400 || erro.status === 413) {
+                responder(res, erro.status, {
+                    erro: erro.message
+                });
+                return;
+            }
+
+            console.error("Erro ao analisar solicitação:", erro.message);
+
+            responder(res, 500, {
+                erro: "Não foi possível analisar a solicitação."
+            });
+        }
+
+        return;
+    }
+
     // ROTA 2: Cadastrar usuários
+    // ROTA: Listar solicitações para análise
+    if (
+        url.pathname === "/api/solicitacoes/recebidas" &&
+        req.method === "GET"
+    ) {
+        const usuario = exigirPerfil(
+            req,
+            res,
+            ["responsavel", "administrador"]
+        );
+
+        if (!usuario) {
+            return;
+        }
+
+        try {
+            let solicitacoes;
+
+            const consulta = `
+                SELECT
+                    s.id,
+                    s.gato_id,
+                    s.usuario_id,
+                    s.questionario,
+                    s.status,
+                    s.criado_em,
+                    g.nome AS nome_gato,
+                    g.imagem AS imagem_gato,
+                    u.nome AS nome_adotante
+                FROM solicitacoes s
+                INNER JOIN gatos g ON g.id = s.gato_id
+                INNER JOIN usuarios u ON u.id = s.usuario_id
+            `;
+
+            if (usuario.perfil === "administrador") {
+                solicitacoes = banco.prepare(`
+                    ${consulta}
+                    ORDER BY s.criado_em DESC, s.id DESC
+                `).all();
+            } else {
+                solicitacoes = banco.prepare(`
+                    ${consulta}
+                    WHERE g.responsavel_id = ?
+                    ORDER BY s.criado_em DESC, s.id DESC
+                `).all(usuario.id);
+            }
+
+            responder(res, 200, solicitacoes);
+
+        } catch (erro) {
+            console.error(
+                "Erro ao listar solicitações:",
+                erro.message
+            );
+
+            responder(res, 500, {
+                erro: "Não foi possível carregar as solicitações."
+            });
+        }
+
+        return;
+    }
+
     if (url.pathname === "/api/cadastro" && req.method === "POST") {
         await cadastrarUsuario(req, res);
         return;

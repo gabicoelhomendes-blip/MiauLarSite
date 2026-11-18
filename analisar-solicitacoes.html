@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analisar solicitações | MiauLar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pagina-analise">
+    <header class="cabecalho-analise">
+        <div class="conteudo-cabecalho-analise">
+            <a href="index.html" class="logo-analise">MiauLar</a>
+
+            <nav aria-label="Navegação principal">
+                <a href="index.html">Início</a>
+                <a href="gerenciar-gatos.html">Gerenciar gatos</a>
+                <a href="analisar-solicitacoes.html" aria-current="page">
+                    Analisar solicitações
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="principal-analise">
+        <section class="painel-analise">
+            <span class="etiqueta-analise">GERENCIAMENTO</span>
+            <h1>Analisar solicitações</h1>
+            <p class="descricao-analise">
+                Confira os pedidos de adoção recebidos e
+                decida se deseja aprová-los ou recusá-los.
+            </p>
+
+            <p id="mensagem-analise"
+               role="status"
+               aria-live="polite">
+                Carregando solicitações...
+            </p>
+
+            <div id="lista-analise" class="lista-analise"></div>
+
+            <div class="rodape-painel-analise">
+                <a href="gerenciar-gatos.html" class="botao-voltar-analise">
+                    Voltar ao gerenciamento
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape-analise">
+        MiauLar - Adoção responsável de gatos.
+    </footer>
+
+    <script type="module" src="js/analisar-solicitacoes.js"></script>
+</body>
+</html>
