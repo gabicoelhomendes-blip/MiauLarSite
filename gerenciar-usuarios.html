@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar usuários | MiauLar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="pagina-usuarios">
+
+    <header class="cabecalho-usuarios">
+        <div class="conteudo-cabecalho-usuarios">
+            <a href="index.html" class="logo-usuarios">
+                MiauLar
+            </a>
+
+            <nav aria-label="Navegação principal">
+                <a href="index.html">Início</a>
+
+                <a href="gerenciar-gatos.html">
+                    Gerenciar gatos
+                </a>
+
+                <a href="gerenciar-usuarios.html"
+                   aria-current="page">
+                    Gerenciar usuários
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="principal-usuarios">
+        <section class="painel-usuarios">
+
+            <span class="etiqueta-usuarios">
+                ADMINISTRAÇÃO
+            </span>
+
+            <h1>Gerenciar usuários</h1>
+
+            <p class="descricao-usuarios">
+                Consulte as contas cadastradas no MiauLar
+                e gerencie seus perfis de acesso.
+            </p>
+
+            <p
+                id="mensagem-usuarios"
+                role="status"
+                aria-live="polite"
+            >
+                Carregando usuários...
+            </p>
+
+            <div
+                id="lista-usuarios"
+                class="lista-usuarios"
+            ></div>
+
+            <div class="rodape-painel-usuarios">
+                <a href="index.html" class="voltar-usuarios">
+                    Voltar ao início
+                </a>
+            </div>
+
+        </section>
+    </main>
+
+    <footer class="rodape-usuarios">
+        MiauLar - Adoção responsável de gatos.
+    </footer>
+
+    <script
+        type="module"
+        src="js/gerenciar-usuarios.js"
+    ></script>
+
+</body>
+</html>

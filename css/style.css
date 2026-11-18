@@ -1780,3 +1780,238 @@ main {
         text-align: center;
     }
 }
+
+/* RF-13 - Gerenciamento de usuários */
+
+.pagina-usuarios {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fa;
+    color: #292929;
+}
+
+.cabecalho-usuarios {
+    background: #fff7f1;
+    border-bottom: 1px solid #f1e5dd;
+}
+
+.conteudo-cabecalho-usuarios {
+    width: min(1100px, calc(100% - 40px));
+    margin: auto;
+    padding: 22px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo-usuarios {
+    color: #f47742;
+    font-size: 26px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.conteudo-cabecalho-usuarios nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.conteudo-cabecalho-usuarios nav a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 600;
+}
+
+.conteudo-cabecalho-usuarios nav a:hover,
+.conteudo-cabecalho-usuarios nav a[aria-current="page"] {
+    color: #f47742;
+}
+
+.principal-usuarios {
+    flex: 1;
+    width: min(900px, calc(100% - 32px));
+    margin: 44px auto;
+}
+
+.painel-usuarios {
+    padding: 32px;
+    background: white;
+    border: 1px solid #eaeaea;
+    border-radius: 16px;
+}
+
+.etiqueta-usuarios {
+    color: #f47742;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.painel-usuarios h1 {
+    color: #f47742;
+    margin: 12px 0;
+}
+
+.descricao-usuarios {
+    color: #666;
+    margin-bottom: 28px;
+}
+
+.lista-usuarios {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.card-usuario {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 18px;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.dados-usuario h2 {
+    margin: 0 0 12px;
+    font-size: 19px;
+}
+
+.dados-usuario p {
+    margin: 6px 0;
+    color: #555;
+    overflow-wrap: anywhere;
+}
+
+.perfil-usuario {
+    padding: 7px 13px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.perfil-administrador {
+    color: #7c3aed;
+    background: #f1eaff;
+}
+
+.perfil-responsavel {
+    color: #a75a00;
+    background: #fff2dd;
+}
+
+.perfil-adotante {
+    color: #167640;
+    background: #e3f6ea;
+}
+
+.rodape-painel-usuarios {
+    margin-top: 28px;
+    text-align: center;
+}
+
+.voltar-usuarios {
+    display: inline-block;
+    padding: 12px 20px;
+    background: #f47742;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.rodape-usuarios {
+    padding: 22px;
+    background: #fff7f1;
+    text-align: center;
+    color: #555;
+}
+
+@media (max-width: 600px) {
+    .conteudo-cabecalho-usuarios {
+        flex-direction: column;
+    }
+
+    .conteudo-cabecalho-usuarios nav {
+        justify-content: center;
+        gap: 12px;
+    }
+
+    .principal-usuarios {
+        margin: 20px auto;
+    }
+
+    .painel-usuarios {
+        padding: 20px;
+    }
+
+    .card-usuario {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* RF-13 - Alteração de perfis */
+
+.acoes-usuario {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 10px;
+}
+
+.seletor-perfil {
+    min-width: 150px;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+    color: #333;
+    font: inherit;
+    font-size: 14px;
+}
+
+.seletor-perfil:focus {
+    outline: 2px solid #f47742;
+    outline-offset: 2px;
+}
+
+.botao-salvar-perfil {
+    padding: 10px 16px;
+    background: #f47742;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.botao-salvar-perfil:hover {
+    background: #df632f;
+}
+
+.botao-salvar-perfil:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+@media (max-width: 600px) {
+    .acoes-usuario {
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .seletor-perfil,
+    .botao-salvar-perfil {
+        width: 100%;
+    }
+}

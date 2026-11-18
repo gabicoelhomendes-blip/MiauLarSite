@@ -232,7 +232,8 @@ async function entregarArquivo(req, res, url) {
             "gerenciar-gatos.html",
             "editar-gato.html",
             "minhas-solicitacoes.html",
-            "analisar-solicitacoes.html"
+            "analisar-solicitacoes.html",
+            "gerenciar-usuarios.html"
 
         ];
 
@@ -1361,6 +1362,162 @@ if (url.pathname === "/api/solicitacoes" && req.method === "POST") {
 
             responder(res, 500, {
                 erro: "Não foi possível analisar a solicitação."
+            });
+        }
+
+        return;
+    }
+
+    // ROTA: Listar usuários cadastrados
+    // Acesso exclusivo de administradores
+    if (
+        url.pathname === "/api/admin/usuarios" &&
+        req.method === "GET"
+    ) {
+        const usuario = exigirPerfil(
+            req,
+            res,
+            ["administrador"]
+        );
+
+        if (!usuario) {
+            return;
+        }
+
+        try {
+            const usuarios = banco.prepare(`
+                SELECT
+                    id,
+                    nome,
+                    email,
+                    telefone,
+                    perfil
+                FROM usuarios
+                ORDER BY nome ASC
+            `).all();
+
+            responder(res, 200, usuarios);
+
+        } catch (erro) {
+            console.error(
+                "Erro ao listar usuários:",
+                erro.message
+            );
+
+            responder(res, 500, {
+                erro: "Não foi possível carregar os usuários."
+            });
+        }
+
+        return;
+    }
+
+    // ROTA: Alterar perfil de um usuário
+    const rotaPerfilUsuario = url.pathname.match(
+        /^\/api\/admin\/usuarios\/([0-9]+)\/perfil$/
+    );
+
+    if (rotaPerfilUsuario && req.method === "PATCH") {
+        const administrador = exigirPerfil(
+            req,
+            res,
+            ["administrador"]
+        );
+
+        if (!administrador) {
+            return;
+        }
+
+        try {
+            const idUsuario = Number(rotaPerfilUsuario[1]);
+            const dados = await receberDados(req);
+
+            if (!Number.isSafeInteger(idUsuario) || idUsuario <= 0) {
+                responder(res, 400, {
+                    erro: "Usuário inválido."
+                });
+                return;
+            }
+
+            if (!["responsavel", "adotante"].includes(dados?.perfil)) {
+                responder(res, 400, {
+                    erro: "Selecione Responsável ou Adotante."
+                });
+                return;
+            }
+
+            const usuario = banco.prepare(`
+                SELECT id, perfil
+                FROM usuarios
+                WHERE id = ?
+            `).get(idUsuario);
+
+            if (!usuario) {
+                responder(res, 404, {
+                    erro: "Usuário não encontrado."
+                });
+                return;
+            }
+
+            if (usuario.perfil === "administrador") {
+                responder(res, 403, {
+                    erro: "O perfil do administrador não pode ser alterado."
+                });
+                return;
+            }
+
+            if (usuario.perfil === dados.perfil) {
+                responder(res, 200, {
+                    mensagem: "O usuário já possui esse perfil."
+                });
+                return;
+            }
+
+            // Não permite transformar em adotante uma conta
+            // que ainda seja responsável por gatos.
+            if (dados.perfil === "adotante") {
+                const total = banco.prepare(`
+                    SELECT COUNT(*) AS total
+                    FROM gatos
+                    WHERE responsavel_id = ?
+                `).get(idUsuario).total;
+
+                if (total > 0) {
+                    responder(res, 409, {
+                        erro: "Este usuário possui gatos vinculados. Transfira a responsabilidade antes de alterar o perfil."
+                    });
+                    return;
+                }
+            }
+
+            banco.prepare(`
+                UPDATE usuarios
+                SET perfil = ?
+                WHERE id = ?
+            `).run(dados.perfil, idUsuario);
+
+            // Encerra sessões anteriores para aplicar o novo perfil.
+            banco.prepare(`
+                DELETE FROM sessoes
+                WHERE usuario_id = ?
+            `).run(idUsuario);
+
+            responder(res, 200, {
+                mensagem: "Perfil atualizado com sucesso!"
+            });
+
+        } catch (erro) {
+            if (erro.status === 400 || erro.status === 413) {
+                responder(res, erro.status, {
+                    erro: erro.message
+                });
+                return;
+            }
+
+            console.error("Erro ao alterar perfil:", erro.message);
+
+            responder(res, 500, {
+                erro: "Não foi possível atualizar o perfil."
             });
         }
 
