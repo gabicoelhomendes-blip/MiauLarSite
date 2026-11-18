@@ -1215,3 +1215,68 @@ main {
     opacity: 0.6;
     cursor: not-allowed;
 }
+
+/* RF-10: Solicitação de adoção */
+
+.area-adocao {
+    margin-top: 28px;
+    padding-top: 22px;
+    border-top: 1px solid #e5e7eb;
+}
+
+.formulario-adocao {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.formulario-adocao h3 {
+    margin: 0;
+    color: #f47742;
+    font-size: 22px;
+}
+
+.formulario-adocao p {
+    margin: 0;
+    line-height: 1.6;
+}
+
+.formulario-adocao label {
+    font-weight: 600;
+}
+
+.formulario-adocao textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    font: inherit;
+    resize: vertical;
+}
+
+.formulario-adocao textarea:focus {
+    outline: 2px solid #f47742;
+    outline-offset: 2px;
+}
+
+.formulario-adocao small {
+    color: #6b7280;
+}
+
+.formulario-adocao .botao {
+    align-self: flex-start;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.formulario-adocao .botao:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.mensagem-adocao {
+    font-weight: 600;
+}

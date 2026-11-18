@@ -924,6 +924,90 @@ function excluirGato(res, usuario, idGato) {
     }
 }
 
+/* Registra uma solicitação de adoção */
+async function solicitarAdocao(req, res, usuario) {
+    try {
+        const dados = await receberDados(req);
+
+        const gatoId = dados?.gato_id;
+        const questionario = typeof dados?.questionario === "string"
+            ? dados.questionario.trim()
+            : "";
+
+        if (!Number.isSafeInteger(gatoId) || gatoId <= 0) {
+            responder(res, 400, {
+                erro: "Gato inválido."
+            });
+            return;
+        }
+
+        if (questionario.length < 30 || questionario.length > 2000) {
+            responder(res, 400, {
+                erro: "Escreva entre 30 e 2000 caracteres sobre seu interesse na adoção."
+            });
+            return;
+        }
+
+        const gato = banco.prepare(
+            "SELECT id, nome, status FROM gatos WHERE id = ?"
+        ).get(gatoId);
+
+        if (!gato) {
+            responder(res, 404, {
+                erro: "Gato não encontrado."
+            });
+            return;
+        }
+
+        if (gato.status !== "Disponível") {
+            responder(res, 409, {
+                erro: "Este gato não está disponível para novas solicitações."
+            });
+            return;
+        }
+
+        // Impede solicitações pendentes duplicadas
+        const existente = banco.prepare(`
+            SELECT id
+            FROM solicitacoes
+            WHERE usuario_id = ?
+              AND gato_id = ?
+              AND status = 'Pendente'
+        `).get(usuario.id, gatoId);
+
+        if (existente) {
+            responder(res, 409, {
+                erro: "Você já possui uma solicitação pendente para este gato."
+            });
+            return;
+        }
+
+        const resultado = banco.prepare(`
+            INSERT INTO solicitacoes (usuario_id, gato_id, questionario)
+            VALUES (?, ?, ?)
+        `).run(usuario.id, gatoId, questionario);
+
+        responder(res, 201, {
+            mensagem: "Solicitação de adoção enviada com sucesso!",
+            id: Number(resultado.lastInsertRowid)
+        });
+
+    } catch (erro) {
+        if (erro.status === 400 || erro.status === 413) {
+            responder(res, erro.status, {
+                erro: erro.message
+            });
+            return;
+        }
+
+        console.error("Erro ao solicitar adoção:", erro.message);
+
+        responder(res, 500, {
+            erro: "Não foi possível enviar a solicitação."
+        });
+    }
+}
+
 // Cria o servidor do MiauLar
 const servidor = http.createServer(async (req, res) => {
 
@@ -1085,6 +1169,18 @@ if (rotaEdicao && req.method === "DELETE") {
     }
 
     excluirGato(res, usuario, idGato);
+    return;
+}
+
+// ROTA: Solicitar adoção
+if (url.pathname === "/api/solicitacoes" && req.method === "POST") {
+    const usuario = exigirPerfil(req, res, ["adotante"]);
+
+    if (!usuario) {
+        return;
+    }
+
+    await solicitarAdocao(req, res, usuario);
     return;
 }
 
