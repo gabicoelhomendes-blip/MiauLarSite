@@ -2191,3 +2191,121 @@ main {
     }
 }
 
+/* Commit 74 - Filtros adicionais do catálogo */
+
+.grupo-filtro-extra {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    min-width: 150px;
+    flex: 1 1 150px;
+}
+
+.grupo-filtro-extra label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #444;
+}
+
+.filtro-extra {
+    width: 100%;
+    min-height: 42px;
+    padding: 10px 12px;
+    border: 1px solid #e5e7eb;
+    border-radius: 9px;
+    background: white;
+    color: #333;
+    font: inherit;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.filtro-extra:focus {
+    outline: 2px solid #f47742;
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .grupo-filtro-extra {
+        width: 100%;
+        min-width: 0;
+        flex: 1 1 100%;
+    }
+}
+
+/* Commit 74 - Alinhamento dos filtros */
+
+#painel-filtros {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-items: end;
+}
+
+#painel-filtros > * {
+    min-width: 0;
+}
+
+#painel-filtros .grupo-filtro-extra {
+    width: 100%;
+    min-width: 0;
+}
+
+#painel-filtros select {
+    width: 100%;
+}
+
+#limpar-filtros {
+    grid-column: 1 / -1;
+    justify-self: end;
+}
+
+#painel-filtros[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 600px) {
+    #painel-filtros {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Organização dos quatro filtros */
+
+#painel-filtros {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+    align-items: end;
+}
+
+#painel-filtros > div {
+    min-width: 0;
+    width: 100%;
+}
+
+#painel-filtros label {
+    display: block;
+    margin-bottom: 7px;
+}
+
+#painel-filtros select {
+    width: 100%;
+    min-height: 42px;
+}
+
+#limpar-filtros {
+    grid-column: 1 / -1;
+    justify-self: end;
+}
+
+#painel-filtros[hidden] {
+    display: none !important;
+}
+
+@media (max-width: 600px) {
+    #painel-filtros {
+        grid-template-columns: 1fr;
+    }
+}
+
