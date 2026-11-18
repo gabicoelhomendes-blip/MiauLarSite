@@ -7,7 +7,7 @@ import bcrypt from "bcrypt";
 import banco from "./database.mjs";
 import { randomBytes, createHash } from "node:crypto";
 
-// Configurações do MiauLarr
+// Configurações do MiauLar
 const porta = 3000;
 
  // Guarda as sessões dos usuários no SQLite
@@ -924,7 +924,7 @@ function excluirGato(res, usuario, idGato) {
     }
 }
 
-// Cria o servidor do MiauLarr
+// Cria o servidor do MiauLar
 const servidor = http.createServer(async (req, res) => {
 
     const url = new URL(req.url, "http://localhost");
@@ -937,7 +937,7 @@ const servidor = http.createServer(async (req, res) => {
             ).get();
 
             responder(res, 200, {
-                sistema: "MiauLarr",
+                sistema: "MiauLar",
                 banco: "conectado",
                 usuarios: resultado.total
             });
@@ -1142,5 +1142,5 @@ if (rotaEdicao && req.method === "DELETE") {
 
 // Inicia o servidor
 servidor.listen(porta, () => {
-    console.log(`MiauLarr iniciado em http://localhost:${porta}`);
+    console.log(`MiauLar iniciado em http://localhost:${porta}`);
 });

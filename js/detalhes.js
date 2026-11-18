@@ -15,7 +15,7 @@ function mostrarErro(mensagem) {
 
 // Apresenta os dados do gato selecionado
 function mostrarGato(gato) {
-    document.title = `${gato.nome} | MiauLarr`;
+    document.title = `${gato.nome} | MiauLar`;
 
     nomeGato.textContent = `Conheça ${gato.nome}`;
 

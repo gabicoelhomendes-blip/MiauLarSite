@@ -1,7 +1,7 @@
 
 import banco from "./database.mjs";
 
-// Gatos iniciais do catálogo MiauLarr
+// Gatos iniciais do catálogo MiauLar
 const gatos = [
     {
         nome: "Mel",
