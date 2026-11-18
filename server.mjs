@@ -233,7 +233,8 @@ async function entregarArquivo(req, res, url) {
             "editar-gato.html",
             "minhas-solicitacoes.html",
             "analisar-solicitacoes.html",
-            "gerenciar-usuarios.html"
+            "gerenciar-usuarios.html",
+            "alterar-senha.html"
 
         ];
 
@@ -1518,6 +1519,149 @@ if (url.pathname === "/api/solicitacoes" && req.method === "POST") {
 
             responder(res, 500, {
                 erro: "Não foi possível atualizar o perfil."
+            });
+        }
+
+        return;
+    }
+
+    // ROTA: Alterar a própria senha
+    if (
+        url.pathname === "/api/alterar-senha" &&
+        req.method === "PATCH"
+    ) {
+        const usuario = exigirPerfil(
+            req,
+            res,
+            ["administrador", "responsavel", "adotante"]
+        );
+
+        if (!usuario) {
+            return;
+        }
+
+        try {
+            const dados = await receberDados(req);
+
+            const senhaAtual = dados?.senhaAtual;
+            const novaSenha = dados?.novaSenha;
+            const confirmarSenha = dados?.confirmarSenha;
+
+            if (
+                typeof senhaAtual !== "string" ||
+                typeof novaSenha !== "string" ||
+                typeof confirmarSenha !== "string"
+            ) {
+                responder(res, 400, {
+                    erro: "Preencha todos os campos."
+                });
+                return;
+            }
+
+            if (
+                novaSenha.length < 8 ||
+                Buffer.byteLength(novaSenha, "utf8") > 72
+            ) {
+                responder(res, 400, {
+                    erro: "A nova senha deve ter pelo menos 8 caracteres e no máximo 72 bytes."
+                });
+                return;
+            }
+
+            if (novaSenha !== confirmarSenha) {
+                responder(res, 400, {
+                    erro: "A confirmação da senha não corresponde."
+                });
+                return;
+            }
+
+            const conta = banco.prepare(`
+                SELECT senha_hash
+                FROM usuarios
+                WHERE id = ?
+            `).get(usuario.id);
+
+            if (!conta) {
+                responder(res, 404, {
+                    erro: "Usuário não encontrado."
+                });
+                return;
+            }
+
+            const senhaCorreta = await bcrypt.compare(
+                senhaAtual,
+                conta.senha_hash
+            );
+
+            if (!senhaCorreta) {
+                responder(res, 401, {
+                    erro: "Senha atual incorreta."
+                });
+                return;
+            }
+
+            const senhaRepetida = await bcrypt.compare(
+                novaSenha,
+                conta.senha_hash
+            );
+
+            if (senhaRepetida) {
+                responder(res, 400, {
+                    erro: "A nova senha deve ser diferente da atual."
+                });
+                return;
+            }
+
+            // Protege a nova senha com BCrypt
+            const novoHash = await bcrypt.hash(novaSenha, 12);
+
+            // Atualiza a senha e encerra as sessões da conta
+            banco.exec("BEGIN IMMEDIATE");
+
+            try {
+                banco.prepare(`
+                    UPDATE usuarios
+                    SET senha_hash = ?
+                    WHERE id = ?
+                `).run(novoHash, usuario.id);
+
+                banco.prepare(`
+                    DELETE FROM sessoes
+                    WHERE usuario_id = ?
+                `).run(usuario.id);
+
+                banco.exec("COMMIT");
+
+            } catch (erro) {
+                banco.exec("ROLLBACK");
+                throw erro;
+            }
+
+            const seguro = process.env.NODE_ENV === "production"
+                ? "; Secure"
+                : "";
+
+            res.setHeader(
+                "Set-Cookie",
+                `miaular_sessao=; HttpOnly; SameSite=Lax; Path=/; Max-Age=0${seguro}`
+            );
+
+            responder(res, 200, {
+                mensagem: "Senha alterada com sucesso! Faça login novamente."
+            });
+
+        } catch (erro) {
+            if (erro.status === 400 || erro.status === 413) {
+                responder(res, erro.status, {
+                    erro: erro.message
+                });
+                return;
+            }
+
+            console.error("Erro ao alterar senha:", erro.message);
+
+            responder(res, 500, {
+                erro: "Não foi possível alterar a senha."
             });
         }
 

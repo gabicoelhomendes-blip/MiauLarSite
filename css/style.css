@@ -2015,3 +2015,179 @@ main {
         width: 100%;
     }
 }
+
+/* RF-14 - Alteração de senha */
+
+.pagina-alterar-senha {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fa;
+    color: #292929;
+}
+
+.cabecalho-senha {
+    background: #fff7f1;
+    border-bottom: 1px solid #f1e5dd;
+}
+
+.conteudo-cabecalho-senha {
+    width: min(1100px, calc(100% - 40px));
+    margin: auto;
+    padding: 22px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo-senha {
+    color: #f47742;
+    font-size: 26px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.conteudo-cabecalho-senha nav {
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+
+.conteudo-cabecalho-senha nav a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.conteudo-cabecalho-senha nav a:hover,
+.conteudo-cabecalho-senha nav a[aria-current="page"] {
+    color: #f47742;
+}
+
+.principal-senha {
+    flex: 1;
+    width: min(480px, calc(100% - 32px));
+    margin: 48px auto;
+}
+
+.painel-senha {
+    background: white;
+    padding: 32px;
+    border: 1px solid #eaeaea;
+    border-radius: 16px;
+}
+
+.etiqueta-senha {
+    color: #f47742;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.painel-senha h1 {
+    color: #f47742;
+    margin: 12px 0;
+}
+
+.descricao-senha {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 28px;
+}
+
+#formulario-senha {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+.campo-senha {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo-senha label {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.campo-senha input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font: inherit;
+}
+
+.campo-senha input:focus {
+    outline: 2px solid #f47742;
+    outline-offset: 2px;
+}
+
+.campo-senha small {
+    color: #777;
+}
+
+.botao-salvar-senha {
+    padding: 13px 20px;
+    border: none;
+    border-radius: 9px;
+    background: #f47742;
+    color: white;
+    font: inherit;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.botao-salvar-senha:hover {
+    background: #df632f;
+}
+
+.botao-salvar-senha:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.link-login-senha {
+    display: inline-block;
+    margin: 12px 0;
+    color: #f47742;
+    font-weight: 700;
+}
+
+.rodape-painel-senha {
+    margin-top: 24px;
+    text-align: center;
+}
+
+.rodape-painel-senha a {
+    color: #f47742;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.rodape-senha {
+    background: #fff7f1;
+    padding: 22px;
+    text-align: center;
+    color: #555;
+}
+
+@media (max-width: 600px) {
+    .conteudo-cabecalho-senha {
+        flex-direction: column;
+    }
+
+    .principal-senha {
+        margin: 20px auto;
+    }
+
+    .painel-senha {
+        padding: 22px;
+    }
+}
+
