@@ -89,11 +89,19 @@
     const marca = criarElemento("a", "tema-marca");
     marca.href = "index.html";
 
-    const marcaIcone = criarElemento(
-        "span",
-        "tema-marca-icone",
-        "🐱"
-    );
+
+const marcaIcone = criarElemento(
+    "span",
+    "tema-marca-icone"
+);
+
+const imagemLogo = document.createElement("img");
+imagemLogo.src = "cats/logo.png";
+imagemLogo.alt = "";
+imagemLogo.className = "tema-logo-imagem";
+
+marcaIcone.appendChild(imagemLogo);
+
 
     const marcaNome = criarElemento("strong", "", "MiauLar");
 

@@ -9,28 +9,59 @@ let filtroAtual = "Todas";
 
 const botoesFiltro = document.querySelectorAll(".filtro-analise");
 
-// Exibe somente os pedidos da situação selecionada
-function aplicarFiltro() {
-    mensagem.style.color = "#555";
 
-    const filtradas = todasSolicitacoes.filter((solicitacao) => {
-        return filtroAtual === "Todas" ||
-               solicitacao.status === filtroAtual;
-    });
+
+function aplicarFiltro() {
+    const total = todasSolicitacoes.length;
+
+    const pendentes = todasSolicitacoes.filter(
+        pedido => pedido.status === "Pendente"
+    ).length;
+
+    const aprovadas = todasSolicitacoes.filter(
+        pedido => pedido.status === "Aprovada"
+    ).length;
+
+    const atualizarNumero = (id, valor) => {
+        const elemento = document.getElementById(id);
+        if (elemento) elemento.textContent = valor;
+    };
+
+    atualizarNumero("total-solicitacoes", total);
+    atualizarNumero("total-pendentes", pendentes);
+    atualizarNumero("total-aprovadas", aprovadas);
+
+    const filtradas = todasSolicitacoes.filter(
+        pedido =>
+            filtroAtual === "Todas" ||
+            pedido.status === filtroAtual
+    );
 
     lista.replaceChildren();
 
-    for (const solicitacao of filtradas) {
-        lista.appendChild(criarCard(solicitacao));
+    if (filtradas.length === 0) {
+        const vazio = document.createElement("div");
+        vazio.className = "analise-vazia";
+
+        const titulo = document.createElement("h2");
+        titulo.textContent = total === 0
+            ? "Nenhum pedido recebido"
+            : "Nenhum pedido neste filtro";
+
+        const descricao = document.createElement("p");
+        descricao.textContent = total === 0
+            ? "Não há solicitações vinculadas a esta conta."
+            : "Selecione outro filtro para consultar os pedidos.";
+
+        vazio.append(titulo, descricao);
+        lista.appendChild(vazio);
+    } else {
+        filtradas.forEach(pedido => {
+            lista.appendChild(criarCard(pedido));
+        });
     }
 
-    if (todasSolicitacoes.length === 0) {
-        mensagem.textContent = "Nenhuma solicitação recebida até o momento.";
-    } else if (filtradas.length === 0) {
-        mensagem.textContent = "Nenhuma solicitação nesta situação.";
-    } else {
-        mensagem.textContent = "";
-    }
+    mensagem.textContent = "";
 }
 
 // Configura os botões de filtro

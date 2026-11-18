@@ -71,10 +71,32 @@ function criarItemGato(gato) {
                 `${gato.nome} foi excluído com sucesso!`;
             mensagem.style.color = "green";
 
-            if (!lista.querySelector(".card-gato")) {
-                lista.textContent =
-                    "Você ainda não possui gatos cadastrados.";
-            }
+
+if (dados.length === 0) {
+    lista.innerHTML = `
+        <div class="gerenciamento-vazio">
+            <div class="gerenciamento-vazio-icone"
+                 aria-hidden="true">
+                ♡
+            </div>
+
+            <h3>Seu primeiro cadastro começa aqui</h3>
+
+            <p>
+                Você ainda não possui gatos cadastrados.
+                Adicione seu primeiro gato para começar
+                a gerenciar os perfis de adoção.
+            </p>
+
+            <a href="cadastrar-gato.html"
+               class="botao-cadastrar-gato">
+                + Cadastrar meu primeiro gato
+            </a>
+        </div>
+    `;
+    return;
+}
+
 
         } catch (erro) {
             mensagem.textContent = erro.message;

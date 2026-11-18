@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Analisar solicitações | MiauLar</title>
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/tema-original.css">
-</head>
+
+<link rel="stylesheet" href="css/tema-original.css">
 <script src="js/tema-original.js" defer></script>
+</head>
 <body class="pagina-analise">
+
     <header class="cabecalho-analise">
         <div class="conteudo-cabecalho-analise">
             <a href="index.html" class="logo-analise">MiauLar</a>
@@ -33,11 +35,30 @@
                 decida se deseja aprová-los ou recusá-los.
             </p>
 
-            <p id="mensagem-analise"
-               role="status"
-               aria-live="polite">
-                Carregando solicitações...
-            </p>
+
+<div class="resumo-analise">
+    <div class="resumo-analise-item">
+        <strong id="total-solicitacoes">0</strong>
+        <span>Total de pedidos</span>
+    </div>
+
+    <div class="resumo-analise-item">
+        <strong id="total-pendentes">0</strong>
+        <span>Aguardando análise</span>
+    </div>
+
+    <div class="resumo-analise-item">
+        <strong id="total-aprovadas">0</strong>
+        <span>Aprovadas</span>
+    </div>
+</div>
+
+<p id="mensagem-analise"
+   role="status"
+   aria-live="polite">
+    Carregando solicitações...
+</p>
+
 
 <div class="filtros-analise" aria-label="Filtrar solicitações">
     <button type="button" class="filtro-analise ativo" data-situacao="Todas">
