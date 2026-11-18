@@ -2,411 +2,466 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MiauLar | Adoção de Gatos</title>
-    <link rel="stylesheet" href="css/style.css">
-    <script src="js/pesquisa.js" defer></script>
-    <script src="js/catalogo.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="MiauLar: encontre gatos para adoção com carinho e responsabilidade.">
+  <title>MiauLar | Explorar gatos</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/pesquisa.js" defer></script>
+  <script src="js/catalogo.js" defer></script>
+  <script src="js/sessao.js" defer></script>
 </head>
-<body>
 
-    <!-- Cabeçalho -->
-    <header>
-        <div class="topo">
-            <h1>MiauLar</h1>
+<body class="pagina-inicial">
+  <a href="#inicio" class="pular-conteudo">Ir para o conteúdo</a>
 
-            <nav aria-label="Menu principal">
-                <a href="#inicio">Início</a>
-                <a href="#catalogo">Gatos para adoção</a>
-                <a href="login.html">Entrar</a>
-                <a href="cadastro.html">Criar conta</a>
-            </nav>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Menu lateral">
+      <a class="marca" href="index.html" aria-label="MiauLar, página inicial">
+        <span class="marca-icone" aria-hidden="true">🐱</span>
+        <strong>MiauLar</strong>
+      </a>
+
+      <div class="sidebar-subtitulo">ADOÇÃO RESPONSÁVEL</div>
+
+      <nav class="sidebar-navegacao" aria-label="Menu principal">
+        <a class="menu-item selecionado" href="#inicio" data-visao="inicio">
+          <span aria-hidden="true">▦</span>
+          Explorar gatos
+        </a>
+
+        <a class="menu-item" href="#favoritos" data-visao="favoritos">
+          <span aria-hidden="true">♡</span>
+          Favoritos
+          <small id="contador-favoritos"></small>
+        </a>
+
+        <span class="menu-item indisponivel"
+              title="Funcionalidade em desenvolvimento"
+              aria-disabled="true">
+          <span aria-hidden="true">▤</span>
+          Minhas solicitações
+        </span>
+
+        <a class="menu-item" href="#guia" data-visao="guia">
+          <span aria-hidden="true">▣</span>
+          Guia de adoção
+        </a>
+      </nav>
+
+      <div class="sidebar-fim">
+        <div class="caixa-cuidados">
+          <div class="caixa-cuidados-titulo">
+            <span aria-hidden="true">♧</span>
+            Um lar seguro começa com uma escolha consciente.
+          </div>
+
+          <a href="#guia">
+            Conheça os cuidados
+            <span aria-hidden="true">↗</span>
+          </a>
         </div>
 
-        <p>Encontre um novo amigo para sua família!</p>
-    </header>
+        <nav class="sidebar-navegacao secundaria"
+             aria-label="Gerenciamento e conta">
 
-    <!-- Conteúdo principal -->
-    <main id="inicio">
+          <a class="menu-item" href="gerenciar-gatos.html">
+            <span aria-hidden="true">♧</span>
+            Gerenciar gatos
+          </a>
 
-        <!-- Apresentação -->
-        <section class="apresentacao">
-            <h2>Encontre um amigo para a vida toda</h2>
+          <a class="menu-item" href="login.html">
+            <span aria-hidden="true">⚙</span>
+            Minha conta
+          </a>
+        </nav>
 
-            <p>
-                Conheça gatos que procuram um novo lar
-                e descubra como a adoção pode transformar vidas.
-            </p>
+        <div class="sidebar-rodape">
+          <span>Projeto acadêmico</span>
+          <span>MiauLar</span>
+        </div>
+      </div>
+    </aside>
 
-            <a href="#catalogo" class="botao">
-                Conhecer os gatos
-            </a>
-        </section>
+    <div class="workspace">
+      <header class="topbar">
+        <div class="breadcrumb">
+          MiauLar
+          <span aria-hidden="true">›</span>
+          <strong id="nome-pagina">Explorar gatos</strong>
+        </div>
 
-        <!-- Catálogo -->
-        <section id="catalogo">
-            <h2>Gatos para adoção</h2>
-            <p>Conheça os gatos que procuram um lar.</p>
-        <!-- Pesquisa de gatos -->
-<div class="pesquisa-gatos">
-    <label for="campo-pesquisa">
-        Pesquisar gato pelo nome:
-    </label>
+        <div class="topbar-acoes">
+          <a class="botao-entrar" href="login.html">
+            Entrar
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </header>
 
-    <input
-        type="search"
-        id="campo-pesquisa"
-        placeholder="Digite o nome do gato..."
-        autocomplete="off"
-    >
-</div>
+      <main id="inicio" class="app-main">
+        <section id="pagina-gatos">
+          <div class="page-heading">
+            <div>
+              <div class="eyebrow" id="subtitulo-pagina">
+                ENCONTRE SEU COMPANHEIRO
+              </div>
 
-                <!-- Filtro por sexo -->
-                <div class="filtro-sexo">
-                    <label for="filtro-sexo">Filtrar por sexo:</label>
+              <h1 id="titulo-pagina">
+                Seu próximo encontro começa aqui.
+              </h1>
 
-                    <select id="filtro-sexo">
-                        <option value="">Todos</option>
-                        <option value="macho">Macho</option>
-                        <option value="femea">Fêmea</option>
-                    </select>
-                </div>
-
-                <!-- Filtro por porte -->
-                <div class="filtro-porte">
-                    <label for="filtro-porte">Filtrar por porte:</label>
-
-                    <select id="filtro-porte">
-                        <option value="">Todos</option>
-                        <option value="pequeno">Pequeno</option>
-                        <option value="medio">Médio</option>
-                        <option value="grande">Grande</option>
-                    </select>
-                </div>
-
-                <!-- Botão para limpar os filtros -->
-                <button type="button" id="limpar-filtros" class="botao">
-                    Limpar filtros
-                </button>
-
-
-
-<p id="resultado-pesquisa" role="status" aria-live="polite"></p>
-
-            <div class="lista-gatos" id="lista-gatos">
-
-                <!-- Gata Mel -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/mel.jpg" alt="Foto da gata Mel">
-                    </div>
-
-                    <div class="informacoes-gato">
-                        <h3>Mel</h3>
-                        <p>Idade: 2 anos</p>
-                        <p>Sexo: Fêmea</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Pequeno</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
-                        
-                        <span class="status-gato">Disponível</span>
-
-                        <p>
-                            <a href="detalhes.html?gato=mel" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Gata Luna -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/luna.jpg" alt="Foto da gata Luna">
-                    </div>
-
-                    <div class="informacoes-gato">
-                        <h3>Luna</h3>
-                        <p>Idade: 1 ano</p>
-                        <p>Sexo: Fêmea</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Pequeno</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
-
-                        <span class="status-gato">Disponível</span>
-
-                        <p>
-                            <a href="detalhes.html?gato=luna" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Gato Simba -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/simba.jpg" alt="Foto do gato Simba">
-                    </div>
-
-                    <div class="informacoes-gato">
-                        <h3>Simba</h3>
-                        <p>Idade: 3 anos</p>
-                        <p>Sexo: Macho</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Médio</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
-
-                        <span class="status-gato">Disponível</span>
-
-                        <p>
-                            <a href="detalhes.html?gato=simba" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Gata Nina -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/nina.png" alt="Foto da gata Nina">
-                    </div>
-
-                    <div class="informacoes-gato">  
-                        <h3>Nina</h3>
-                        <p>Idade: 8 meses</p>
-                        <p>Sexo: Fêmea</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Pequeno</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
-                        <span class="status-gato">Disponível</span>
-
-                        <p>
-                            <a href="detalhes.html?gato=nina" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-
-                    </div> 
-                </article>
-
-                <!-- Gato Thor -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/thor.png" alt="Foto do gato Thor">
-                    </div>
-
-                    <div class="informacoes-gato">
-                        <h3>Thor</h3>
-                        <p>Idade: 2 anos</p>
-                        <p>Sexo: Macho</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Médio</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
-                        <span class="status-gato">Disponível</span>
-
-                        <p>
-                            <a href="detalhes.html?gato=thor" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>
-
-
-
-                <!-- Gata Amora -->
-                <article class="card-gato">
-            <div class="foto-gato">
-                <img src="cats/amora.png" alt="Foto da gata Amora">
+              <p id="descricao-pagina">
+                Conheça os gatos, encontre uma conexão e acompanhe cada etapa da adoção.
+              </p>
             </div>
 
-            <div class="informacoes-gato">
-                <h3>Amora</h3>
-                <p>Idade: 1 ano</p>
-                <p>Sexo: Fêmea</p>
-                <p>Raça: Sem raça definida (SRD)</p>
-                <p>Porte: Pequeno</p>
-                <p>Localização: Franca - SP</p>
-                <p>Saúde: A confirmar com o responsável.</p>
+            <span class="total-pill" id="total-gatos" aria-live="polite">
+              🐾 Gatos encontrados
+            </span>
+          </div>
 
-                        <span class="status-gato">Disponível</span>
+          <section id="catalogo" aria-label="Catálogo de gatos">
+            <div class="catalog-toolbar">
+              <div class="search-box">
+                <span aria-hidden="true">⌕</span>
 
-                        <p>
-                            <a href="detalhes.html?gato=amora" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>
+                <label class="sr-only" for="campo-pesquisa">
+                  Buscar gatos pelo nome
+                </label>
 
-                <!-- Gato Oliver -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/oliver.png" alt="Foto do gato Oliver">
-                    </div>
+                <input
+                  type="search"
+                  id="campo-pesquisa"
+                  placeholder="Buscar por nome ou cidade"
+                  autocomplete="off"
+                >
+              </div>
 
-                    <div class="informacoes-gato">
-                        <h3>Oliver</h3>
-                        <p>Idade: 4 meses</p>
-                        <p>Sexo: Macho</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Pequeno</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
- 
-                        <span class="status-gato">Disponível</span>
+              <button
+                class="filter-toggle"
+                type="button"
+                id="alternar-filtros"
+                aria-controls="painel-filtros"
+                aria-expanded="false"
+              >
+                ☷ <span>Filtros</span>
+              </button>
 
-                        <p>
-                            <a href="detalhes.html?gato=oliver" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Gata Milk -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/milk.png" alt="Foto da gata Milk">
-                    </div>
-
-                    <div class="informacoes-gato">
-                        <h3>Milk</h3>
-                        <p>Idade: 6 meses</p>
-                        <p>Sexo: Fêmea</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Pequeno</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
-
-                        <span class="status-gato">Disponível</span>
-
-                        <p>
-                            <a href="detalhes.html?gato=milk" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Gata Luck -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/luck.png" alt="Foto da gata Luck">
-                    </div>
-
-                    <div class="informacoes-gato">
-                        <h3>Luck</h3>
-                        <p>Idade: 1 ano</p>
-                        <p>Sexo: Fêmea</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Pequeno</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
-
-                        <span class="status-gato">Disponível</span>
-
-                        <p>
-                            <a href="detalhes.html?gato=luck" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Gata Frida -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/frida.png" alt="Foto da gata Frida, de pelagem cinza">
-                    </div>
-
-                    <div class="informacoes-gato">
-                        <h3>Frida</h3>
-                        <p>Idade: 2 anos</p>
-                        <p>Sexo: Fêmea</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Pequeno</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
-
-                        <span class="status-gato">Disponível</span>
-
-                        <p>
-                            <a href="detalhes.html?gato=frida" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Gato Bento -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/bento.png" alt="Foto do gato Bento">
-                    </div>
-
-                    <div class="informacoes-gato">
-                        <h3>Bento</h3>
-                        <p>Idade: 1 ano</p>
-                        <p>Sexo: Macho</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Médio</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
-
-                        <span class="status-gato">Disponível</span>
-
-                        <p>
-                            <a href="detalhes.html?gato=bento" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>
-
-                <!-- Gata Mia -->
-                <article class="card-gato">
-                    <div class="foto-gato">
-                        <img src="cats/mia.png" alt="Foto da gata Mia">
-                    </div>
-
-                    <div class="informacoes-gato">
-                        <h3>Mia</h3>
-                        <p>Idade: 2 anos</p>
-                        <p>Sexo: Fêmea</p>
-                        <p>Raça: Sem raça definida (SRD)</p>
-                        <p>Porte: Pequeno</p>
-                        <p>Localização: Franca - SP</p>
-                        <p>Saúde: A confirmar com o responsável.</p>
-
-                        <span class="status-gato">Disponível</span>
-
-                        <p>
-                            <a href="detalhes.html?gato=mia" class="botao">
-                                Ver detalhes
-                            </a>
-                        </p>
-                    </div>
-                </article>      
-
+              <label class="sort-select">
+                Ordenar
+                <select id="ordenar-gatos" aria-label="Ordenação dos gatos">
+                  <option value="nome">Nome</option>
+                  <option value="idade">Idade</option>
+                </select>
+              </label>
             </div>
+
+            <div id="painel-filtros" class="filter-panel" hidden>
+              <div class="filtro-sexo">
+                <label for="filtro-sexo">Sexo</label>
+                <select id="filtro-sexo">
+                  <option value="">Todos</option>
+                  <option value="macho">Macho</option>
+                  <option value="femea">Fêmea</option>
+                </select>
+              </div>
+
+              <div class="filtro-porte">
+                <label for="filtro-porte">Porte</label>
+                <select id="filtro-porte">
+                  <option value="">Todos</option>
+                  <option value="pequeno">Pequeno</option>
+                  <option value="medio">Médio</option>
+                  <option value="grande">Grande</option>
+                </select>
+              </div>
+
+              <button
+                type="button"
+                id="limpar-filtros"
+                class="botao-limpar"
+              >
+                Limpar filtros
+              </button>
+            </div>
+
+            <div class="catalog-results">
+              <p id="resultado-pesquisa"
+                 role="status"
+                 aria-live="polite"></p>
+
+              <span class="visualizacao" aria-hidden="true">
+                ▦ &nbsp; ≡
+              </span>
+            </div>
+
+            <div
+              class="lista-gatos animal-grid"
+              id="lista-gatos"
+              aria-live="polite"
+            >
+              <p class="carregando-gatos">
+                Carregando gatos...
+              </p>
+            </div>
+          </section>
         </section>
 
-    </main>
+        <section id="pagina-guia" hidden>
+          <div class="eyebrow">ADOÇÃO CONSCIENTE</div>
+          <h1>Um cuidado de cada vez.</h1>
 
-    <!-- Rodapé -->
-    <footer>
-        <p>MiauLar - Projeto acadêmico de adoção de gatos.</p>
-    </footer>
+          <p>
+            Antes de adotar, conheça o gato e converse com o responsável sobre suas necessidades.
+          </p>
 
-    <script src="js/sessao.js" defer></script>
+          <div class="guia-cards">
+            <article>
+              <strong>01 · Conheça o gato</strong>
+              <p>Leia o perfil, a idade, as informações de saúde e a localização.</p>
+            </article>
+
+            <article>
+              <strong>02 · Prepare sua casa</strong>
+              <p>Proteja janelas, organize água, alimentação, caixa de areia e um espaço tranquilo.</p>
+            </article>
+
+            <article>
+              <strong>03 · Adoção responsável</strong>
+              <p>Considere os cuidados veterinários e o compromisso de longo prazo.</p>
+            </article>
+          </div>
+        </section>
+      </main>
+
+      <footer class="rodape-site">
+        MiauLar
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      const lista = document.getElementById("lista-gatos");
+      const painel = document.getElementById("painel-filtros");
+      const toggle = document.getElementById("alternar-filtros");
+      const total = document.getElementById("total-gatos");
+      const favoritosNumero = document.getElementById("contador-favoritos");
+      const chave = "miaular-favoritos";
+
+      let favoritos = [];
+
+      try {
+        favoritos = JSON.parse(localStorage.getItem(chave) || "[]");
+        if (!Array.isArray(favoritos)) favoritos = [];
+      } catch {
+        favoritos = [];
+      }
+
+      const idDoCard = (card) => {
+        const url = card.querySelector('a[href*="detalhes.html"]')
+          ?.getAttribute("href") || "";
+
+        return new URLSearchParams(url.split("?")[1] || "")
+          .get("gato") || card.querySelector("h3")?.textContent.trim() || "";
+      };
+
+      function atualizarFavoritos() {
+        favoritosNumero.textContent = favoritos.length || "";
+
+        for (const card of lista.querySelectorAll(".card-gato")) {
+          const btn = card.querySelector(".favoritar-gato");
+          if (!btn) continue;
+
+          const marcado = favoritos.includes(idDoCard(card));
+
+          btn.classList.toggle("marcado", marcado);
+          btn.setAttribute("aria-pressed", String(marcado));
+          btn.setAttribute(
+            "aria-label",
+            marcado ? "Remover dos favoritos" : "Adicionar aos favoritos"
+          );
+          btn.textContent = marcado ? "♥" : "♡";
+        }
+      }
+
+      function prepararCards() {
+        for (const card of lista.querySelectorAll(".card-gato")) {
+          if (card.querySelector(".favoritar-gato")) continue;
+
+          const foto = card.querySelector(".foto-gato")
+            || card.querySelector("img")?.parentElement;
+
+          if (!foto) continue;
+
+          foto.classList.add("foto-com-favorito");
+
+          const btn = document.createElement("button");
+          btn.className = "favoritar-gato";
+          btn.type = "button";
+
+          btn.addEventListener("click", () => {
+            const id = idDoCard(card);
+
+            favoritos = favoritos.includes(id)
+              ? favoritos.filter((x) => x !== id)
+              : [...favoritos, id];
+
+            try {
+              localStorage.setItem(chave, JSON.stringify(favoritos));
+            } catch {}
+
+            atualizarFavoritos();
+
+            if (location.hash === "#favoritos") {
+              atualizarVisao();
+            }
+          });
+
+          foto.appendChild(btn);
+        }
+
+        atualizarFavoritos();
+        atualizarVisao();
+      }
+
+      function atualizarVisao() {
+        const visao = location.hash === "#favoritos"
+          ? "favoritos"
+          : location.hash === "#guia"
+          ? "guia"
+          : "inicio";
+
+        const guia = visao === "guia";
+
+        document.getElementById("pagina-gatos").hidden = guia;
+        document.getElementById("pagina-guia").hidden = !guia;
+
+        document.getElementById("nome-pagina").textContent = guia
+          ? "Guia de adoção"
+          : visao === "favoritos"
+          ? "Favoritos"
+          : "Explorar gatos";
+
+        document.querySelectorAll("[data-visao]").forEach((link) => {
+          link.classList.toggle(
+            "selecionado",
+            link.dataset.visao === visao
+          );
+        });
+
+        document.getElementById("titulo-pagina").textContent =
+          visao === "favoritos"
+            ? "Um carinho reservado."
+            : "Seu próximo encontro começa aqui.";
+
+        document.getElementById("descricao-pagina").textContent =
+          visao === "favoritos"
+            ? "Seus gatos favoritos, salvos neste navegador."
+            : "Conheça os gatos, encontre uma conexão e acompanhe cada etapa da adoção.";
+
+        document.getElementById("subtitulo-pagina").textContent =
+          visao === "favoritos"
+            ? "SUAS CONEXÕES"
+            : "ENCONTRE SEU COMPANHEIRO";
+
+        const cards = [...lista.querySelectorAll(".card-gato")];
+
+        cards.forEach((card) => {
+          card.classList.toggle(
+            "oculto-por-favoritos",
+            visao === "favoritos" && !favoritos.includes(idDoCard(card))
+          );
+        });
+
+        const visiveis = cards.filter(
+          (card) => getComputedStyle(card).display !== "none"
+        ).length;
+
+        total.textContent =
+          `🐾 ${visiveis} ${
+            visiveis === 1 ? "gato encontrado" : "gatos encontrados"
+          }`;
+      }
+
+      toggle.addEventListener("click", () => {
+        painel.hidden = !painel.hidden;
+        toggle.setAttribute("aria-expanded", String(!painel.hidden));
+      });
+
+      document.getElementById("ordenar-gatos")
+        .addEventListener("change", (e) => {
+          const cards = [...lista.querySelectorAll(".card-gato")];
+
+          cards.sort((a, b) => {
+            if (e.target.value === "idade") {
+              const idadeA = parseFloat(
+                a.textContent.match(/Idade:\s*([\d,.]+)/i)?.[1]
+                  ?.replace(",", ".") || 999
+              );
+
+              const idadeB = parseFloat(
+                b.textContent.match(/Idade:\s*([\d,.]+)/i)?.[1]
+                  ?.replace(",", ".") || 999
+              );
+
+              return idadeA - idadeB;
+            }
+
+            return (a.querySelector("h3")?.textContent || "")
+              .localeCompare(
+                b.querySelector("h3")?.textContent || "",
+                "pt-BR"
+              );
+          });
+
+          cards.forEach((card) => lista.appendChild(card));
+        });
+
+      let preparando = false;
+
+      const observer = new MutationObserver(() => {
+        if (preparando) return;
+
+        preparando = true;
+
+        requestAnimationFrame(() => {
+          prepararCards();
+          preparando = false;
+        });
+      });
+
+      observer.observe(lista, {
+        childList: true,
+        subtree: true
+      });
+
+      window.addEventListener("hashchange", atualizarVisao);
+
+      document.getElementById("campo-pesquisa")
+        .addEventListener("input", () => {
+          requestAnimationFrame(atualizarVisao);
+        });
+
+      document.getElementById("filtro-sexo")
+        .addEventListener("change", () => {
+          requestAnimationFrame(atualizarVisao);
+        });
+
+      document.getElementById("filtro-porte")
+        .addEventListener("change", () => {
+          requestAnimationFrame(atualizarVisao);
+        });
+
+      document.getElementById("limpar-filtros")
+        .addEventListener("click", () => {
+          requestAnimationFrame(atualizarVisao);
+        });
+
+      prepararCards();
+    })();
+  </script>
 </body>
 </html>
