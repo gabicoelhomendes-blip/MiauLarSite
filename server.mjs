@@ -881,6 +881,49 @@ async function editarGato(req, res, usuario, idGato) {
     }
 }
 
+/* Exclui um gato após verificar as permissões */
+function excluirGato(res, usuario, idGato) {
+    try {
+        const gato = banco.prepare(
+            "SELECT * FROM gatos WHERE id = ?"
+        ).get(idGato);
+
+        if (!gato) {
+            responder(res, 404, {
+                erro: "Gato não encontrado."
+            });
+            return;
+        }
+
+        // Administrador pode excluir qualquer gato.
+        // Responsável pode excluir apenas os próprios.
+        if (
+            usuario.perfil !== "administrador" &&
+            gato.responsavel_id !== usuario.id
+        ) {
+            responder(res, 403, {
+                erro: "Você não tem permissão para excluir este gato."
+            });
+            return;
+        }
+
+        banco.prepare(
+            "DELETE FROM gatos WHERE id = ?"
+        ).run(idGato);
+
+        responder(res, 200, {
+            mensagem: "Gato excluído com sucesso!"
+        });
+
+    } catch (erro) {
+        console.error("Erro ao excluir gato:", erro.message);
+
+        responder(res, 500, {
+            erro: "Não foi possível excluir o gato."
+        });
+    }
+}
+
 // Cria o servidor do MiauLarr
 const servidor = http.createServer(async (req, res) => {
 
@@ -1019,6 +1062,32 @@ const servidor = http.createServer(async (req, res) => {
         await editarGato(req, res, usuario, idGato);
         return;
     }
+
+// ROTA: Excluir um gato
+if (rotaEdicao && req.method === "DELETE") {
+    const usuario = exigirPerfil(
+        req,
+        res,
+        ["responsavel", "administrador"]
+    );
+
+    if (!usuario) {
+        return;
+    }
+
+    const idGato = Number(rotaEdicao[1]);
+
+    if (!Number.isSafeInteger(idGato) || idGato <= 0) {
+        responder(res, 400, {
+            erro: "Identificador do gato inválido."
+        });
+        return;
+    }
+
+    excluirGato(res, usuario, idGato);
+    return;
+}
+
     // ROTA 2: Cadastrar usuários
     if (url.pathname === "/api/cadastro" && req.method === "POST") {
         await cadastrarUsuario(req, res);

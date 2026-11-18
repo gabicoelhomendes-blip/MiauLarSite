@@ -1168,3 +1168,50 @@ main {
         height: 220px;
     }
 }
+
+/* Commit 66 - Botões de gerenciamento */
+
+#lista-gerenciamento .acoes-gato {
+    display: flex;
+    gap: 10px;
+    padding: 10px 12px 14px;
+}
+
+#lista-gerenciamento .acoes-gato .botao,
+#lista-gerenciamento .acoes-gato .botao-excluir {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: 0;
+    padding: 10px;
+
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+}
+
+#lista-gerenciamento .acoes-gato .botao {
+    background: #f47742;
+    color: white;
+    border: none;
+}
+
+#lista-gerenciamento .acoes-gato .botao-excluir {
+    background: white;
+    color: #d64242;
+    border: 1px solid #d64242;
+    cursor: pointer;
+}
+
+#lista-gerenciamento .acoes-gato .botao-excluir:hover {
+    background: #fff1f1;
+}
+
+#lista-gerenciamento .acoes-gato .botao-excluir:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

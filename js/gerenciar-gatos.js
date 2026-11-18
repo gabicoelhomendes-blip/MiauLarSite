@@ -2,7 +2,7 @@
 const lista = document.getElementById("lista-gerenciamento");
 const mensagem = document.getElementById("mensagem-gerenciamento");
 
-// Cria um cartão de gato na área de gerenciamento
+// Cria um cartão para cada gato
 function criarItemGato(gato) {
     const item = document.createElement("article");
     item.className = "card-gato";
@@ -20,18 +20,88 @@ function criarItemGato(gato) {
     const status = document.createElement("p");
     status.textContent = `Situação: ${gato.status}`;
 
-    const botao = document.createElement("a");
-    botao.className = "botao";
-    botao.href = `editar-gato.html?id=${gato.id}`;
-    botao.textContent = "Editar";
+    // Botão para editar o gato
+    const botaoEditar = document.createElement("a");
+    botaoEditar.className = "botao";
+    botaoEditar.href = `editar-gato.html?id=${gato.id}`;
+    botaoEditar.textContent = "Editar";
 
-    item.append(imagem, nome, idade, status, botao);
+    // Botão para excluir o gato
+    const botaoExcluir = document.createElement("button");
+    botaoExcluir.type = "button";
+    botaoExcluir.className = "botao-excluir";
+    botaoExcluir.textContent = "Excluir";
+
+    botaoExcluir.addEventListener("click", async () => {
+        const confirmado = confirm(
+            `Tem certeza que deseja excluir ${gato.nome}?\n\n` +
+            "Essa ação é permanente e também excluirá " +
+            "as solicitações de adoção vinculadas ao gato."
+        );
+
+        if (!confirmado) {
+            return;
+        }
+
+        botaoExcluir.disabled = true;
+        botaoExcluir.textContent = "Excluindo...";
+        mensagem.textContent = "";
+
+        try {
+            const resposta = await fetch(
+                `/api/gatos/${gato.id}`,
+                {
+                    method: "DELETE",
+                    credentials: "same-origin"
+                }
+            );
+
+            const dados = await resposta.json();
+
+            if (!resposta.ok) {
+                throw new Error(
+                    dados.erro || "Não foi possível excluir o gato."
+                );
+            }
+
+            // Retira o cartão somente após a exclusão no servidor
+            item.remove();
+
+            mensagem.textContent =
+                `${gato.nome} foi excluído com sucesso!`;
+            mensagem.style.color = "green";
+
+            if (!lista.querySelector(".card-gato")) {
+                lista.textContent =
+                    "Você ainda não possui gatos cadastrados.";
+            }
+
+        } catch (erro) {
+            mensagem.textContent = erro.message;
+            mensagem.style.color = "red";
+
+        } finally {
+            if (item.isConnected) {
+                botaoExcluir.disabled = false;
+                botaoExcluir.textContent = "Excluir";
+            }
+        }
+    });
+
+    // Organiza os botões lado a lado
+    const acoes = document.createElement("div");
+    acoes.className = "acoes-gato";
+    acoes.append(botaoEditar, botaoExcluir);
+
+    item.append(imagem, nome, idade, status, acoes);
 
     return item;
 }
 
-// Consulta somente os gatos permitidos para a conta
+// Consulta os gatos que o usuário pode gerenciar
 async function carregarMeusGatos() {
+    mensagem.textContent = "";
+
     try {
         const resposta = await fetch("/api/meus-gatos", {
             credentials: "same-origin"
@@ -48,7 +118,8 @@ async function carregarMeusGatos() {
         lista.replaceChildren();
 
         if (dados.length === 0) {
-            lista.textContent = "Você ainda não possui gatos cadastrados.";
+            lista.textContent =
+                "Você ainda não possui gatos cadastrados.";
             return;
         }
 
@@ -63,4 +134,5 @@ async function carregarMeusGatos() {
     }
 }
 
+// Carrega os gatos ao abrir a página
 carregarMeusGatos();
