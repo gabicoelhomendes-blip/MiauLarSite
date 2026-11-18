@@ -1736,3 +1736,47 @@ main {
         height: 200px;
     }
 }
+
+/* RF-20 - Filtros das solicitações */
+
+.filtros-analise {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.filtro-analise {
+    padding: 10px 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 9px;
+    background: white;
+    color: #555;
+    font: inherit;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+}
+
+.filtro-analise:hover {
+    border-color: #f47742;
+    color: #f47742;
+}
+
+.filtro-analise.ativo {
+    background: #f47742;
+    border-color: #f47742;
+    color: white;
+}
+
+.filtro-analise.ativo:hover {
+    color: white;
+}
+
+@media (max-width: 600px) {
+    .filtro-analise {
+        flex: 1 1 calc(50% - 10px);
+        text-align: center;
+    }
+}

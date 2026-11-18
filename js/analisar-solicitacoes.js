@@ -2,6 +2,57 @@
 const lista = document.getElementById("lista-analise");
 const mensagem = document.getElementById("mensagem-analise");
 
+
+// Guarda as solicitações e o filtro selecionado
+let todasSolicitacoes = [];
+let filtroAtual = "Todas";
+
+const botoesFiltro = document.querySelectorAll(".filtro-analise");
+
+// Exibe somente os pedidos da situação selecionada
+function aplicarFiltro() {
+    mensagem.style.color = "#555";
+
+    const filtradas = todasSolicitacoes.filter((solicitacao) => {
+        return filtroAtual === "Todas" ||
+               solicitacao.status === filtroAtual;
+    });
+
+    lista.replaceChildren();
+
+    for (const solicitacao of filtradas) {
+        lista.appendChild(criarCard(solicitacao));
+    }
+
+    if (todasSolicitacoes.length === 0) {
+        mensagem.textContent = "Nenhuma solicitação recebida até o momento.";
+    } else if (filtradas.length === 0) {
+        mensagem.textContent = "Nenhuma solicitação nesta situação.";
+    } else {
+        mensagem.textContent = "";
+    }
+}
+
+// Configura os botões de filtro
+for (const botao of botoesFiltro) {
+    botao.addEventListener("click", () => {
+        filtroAtual = botao.dataset.situacao;
+
+        for (const item of botoesFiltro) {
+            const ativo = item === botao;
+            item.classList.toggle("ativo", ativo);
+            item.setAttribute("aria-pressed", String(ativo));
+        }
+
+        aplicarFiltro();
+    });
+
+    botao.setAttribute(
+        "aria-pressed",
+        String(botao.dataset.situacao === filtroAtual)
+    );
+}
+
 // Formata a data da solicitação
 function formatarData(valor) {
     if (!valor) return "Data não informada";
@@ -177,20 +228,8 @@ async function carregarSolicitacoes() {
         throw new Error("Resposta inválida do servidor.");
     }
 
-    lista.replaceChildren();
-
-    if (dados.length === 0) {
-        mensagem.textContent =
-            "Nenhuma solicitação recebida até o momento.";
-        mensagem.style.color = "#555";
-        return;
-    }
-
-    mensagem.textContent = "";
-
-    for (const solicitacao of dados) {
-        lista.appendChild(criarCard(solicitacao));
-    }
+    todasSolicitacoes = dados;
+    aplicarFiltro();
 }
 
 // Inicia a página
