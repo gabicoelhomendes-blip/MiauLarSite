@@ -147,13 +147,6 @@
                 ☷ <span>Filtros</span>
               </button>
 
-              <label class="sort-select">
-                Ordenar
-                <select id="ordenar-gatos" aria-label="Ordenação dos gatos">
-                  <option value="nome">Nome</option>
-                  <option value="idade">Idade</option>
-                </select>
-              </label>
             </div>
 
             <div id="painel-filtros" class="filter-panel" hidden>
@@ -190,9 +183,7 @@
                  role="status"
                  aria-live="polite"></p>
 
-              <span class="visualizacao" aria-hidden="true">
-                ▦ &nbsp; ≡
-              </span>
+   
             </div>
 
             <div
@@ -207,31 +198,136 @@
           </section>
         </section>
 
-        <section id="pagina-guia" hidden>
-          <div class="eyebrow">ADOÇÃO CONSCIENTE</div>
-          <h1>Um cuidado de cada vez.</h1>
 
-          <p>
-            Antes de adotar, conheça o gato e converse com o responsável sobre suas necessidades.
-          </p>
+<section id="pagina-guia" class="guia-original" hidden>
 
-          <div class="guia-cards">
-            <article>
-              <strong>01 · Conheça o gato</strong>
-              <p>Leia o perfil, a idade, as informações de saúde e a localização.</p>
-            </article>
+    <div class="guia-cabecalho">
+        <span class="guia-etiqueta">ADOÇÃO CONSCIENTE</span>
 
-            <article>
-              <strong>02 · Prepare sua casa</strong>
-              <p>Proteja janelas, organize água, alimentação, caixa de areia e um espaço tranquilo.</p>
-            </article>
+        <h1>Cuidado em cada etapa.</h1>
 
-            <article>
-              <strong>03 · Adoção responsável</strong>
-              <p>Considere os cuidados veterinários e o compromisso de longo prazo.</p>
-            </article>
-          </div>
+        <p>
+            Entenda o processo e prepare um ambiente seguro
+            para o novo companheiro.
+        </p>
+    </div>
+
+    <div class="guia-etapas">
+        <article class="guia-etapa">
+            <span class="guia-etapa-icone">⌕</span>
+            <span class="guia-etapa-numero">01</span>
+
+            <h2>Conheça o gato</h2>
+
+            <p>
+                Explore os perfis, combine filtros e leia
+                as informações sobre personalidade, saúde
+                e necessidades.
+            </p>
+        </article>
+
+        <article class="guia-etapa">
+            <span class="guia-etapa-icone">▤</span>
+            <span class="guia-etapa-numero">02</span>
+
+            <h2>Envie sua intenção</h2>
+
+            <p>
+                Crie uma conta de adotante e responda ao
+                questionário sobre sua moradia, rotina
+                e cuidados.
+            </p>
+        </article>
+
+        <article class="guia-etapa">
+            <span class="guia-etapa-icone">⌂</span>
+            <span class="guia-etapa-numero">03</span>
+
+            <h2>Acompanhe a análise</h2>
+
+            <p>
+                O responsável avalia o pedido. A decisão
+                aparece em Solicitações, e o envio não
+                garante a adoção.
+            </p>
+        </article>
+    </div>
+
+    <div class="guia-informacoes">
+
+        <section class="guia-cuidados">
+            <h2>Antes de receber um gato</h2>
+
+            <ul>
+                <li>
+                    Proteja janelas e acessos para evitar
+                    fugas e quedas.
+                </li>
+
+                <li>
+                    Planeje alimentação, higiene e
+                    acompanhamento veterinário.
+                </li>
+
+                <li>
+                    Prepare um espaço tranquilo para
+                    adaptação do animal.
+                </li>
+
+                <li>
+                    Separe água, caixa de areia,
+                    arranhador e brinquedos.
+                </li>
+            </ul>
         </section>
+
+        <section class="guia-perguntas">
+            <h2>Sobre os pedidos</h2>
+
+            <details>
+                <summary>
+                    Posso enviar mais de um pedido
+                    para o mesmo gato?
+                </summary>
+
+                <p>
+                    O sistema impede que você tenha
+                    duas solicitações pendentes para
+                    o mesmo gato.
+                </p>
+            </details>
+
+            <details>
+                <summary>
+                    O que acontece após a aprovação?
+                </summary>
+
+                <p>
+                    A solicitação passa para Aprovada
+                    e o gato é marcado como Adotado.
+                    Os demais pedidos pendentes para
+                    esse gato são recusados.
+                </p>
+            </details>
+
+            <details>
+                <summary>
+                    Como acompanho minha solicitação?
+                </summary>
+
+                <p>
+                    Acesse Minhas solicitações para
+                    visualizar seus pedidos e conferir
+                    se estão pendentes, aprovados
+                    ou recusados.
+                </p>
+            </details>
+        </section>
+
+    </div>
+
+</section>
+
       </main>
 
       <footer class="rodape-site">
@@ -388,35 +484,6 @@
         painel.hidden = !painel.hidden;
         toggle.setAttribute("aria-expanded", String(!painel.hidden));
       });
-
-      document.getElementById("ordenar-gatos")
-        .addEventListener("change", (e) => {
-          const cards = [...lista.querySelectorAll(".card-gato")];
-
-          cards.sort((a, b) => {
-            if (e.target.value === "idade") {
-              const idadeA = parseFloat(
-                a.textContent.match(/Idade:\s*([\d,.]+)/i)?.[1]
-                  ?.replace(",", ".") || 999
-              );
-
-              const idadeB = parseFloat(
-                b.textContent.match(/Idade:\s*([\d,.]+)/i)?.[1]
-                  ?.replace(",", ".") || 999
-              );
-
-              return idadeA - idadeB;
-            }
-
-            return (a.querySelector("h3")?.textContent || "")
-              .localeCompare(
-                b.querySelector("h3")?.textContent || "",
-                "pt-BR"
-              );
-          });
-
-          cards.forEach((card) => lista.appendChild(card));
-        });
 
       let preparando = false;
 

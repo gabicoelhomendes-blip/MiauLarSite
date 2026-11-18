@@ -45,8 +45,13 @@ formulario.addEventListener("submit", async (evento) => {
         mensagem.textContent = `Bem-vindo(a), ${resultado.usuario.nome}!`;
         mensagem.style.color = "green";
 
-        // Limpa a senha após o login
-        document.getElementById("senha").value = "";
+
+// Limpa a senha após o login
+document.getElementById("senha").value = "";
+
+// Redireciona para o catálogo após a autenticação
+window.location.assign("index.html");
+
 
     } catch (erro) {
         mensagem.textContent =

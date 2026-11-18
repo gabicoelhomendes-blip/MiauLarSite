@@ -1,0 +1,1099 @@
+
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+/* Identidade visual do MiauLar original */
+
+:root {
+    --tema-laranja: #b7440b;
+    --tema-laranja-hover: #a43b05;
+    --tema-texto: #171717;
+    --tema-cinza: #555555;
+    --tema-fundo: #f6f6f6;
+    --tema-borda: #dedede;
+}
+
+body.tema-aplicado {
+    margin: 0 !important;
+    background: var(--tema-fundo) !important;
+    color: var(--tema-texto) !important;
+    font-family: "DM Sans", Arial, sans-serif !important;
+}
+
+body.tema-aplicado *,
+body.tema-aplicado *::before,
+body.tema-aplicado *::after {
+    box-sizing: border-box;
+}
+
+body.tema-aplicado h1,
+body.tema-aplicado h2,
+body.tema-aplicado h3 {
+    font-family: "Manrope", Arial, sans-serif;
+    letter-spacing: -0.04em;
+}
+
+body.tema-aplicado [hidden] {
+    display: none !important;
+}
+
+body.tema-aplicado > .tema-cabecalho-antigo,
+body.tema-aplicado > .tema-rodape-antigo {
+    display: none !important;
+}
+
+/* Estrutura da aplicação */
+
+.tema-shell {
+    min-height: 100dvh;
+}
+
+.tema-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 236px;
+    padding: 30px 18px 18px;
+    background: white;
+    border-right: 1px solid var(--tema-borda);
+    z-index: 30;
+
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+/* Marca */
+
+.tema-marca {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+
+    font-family: "Manrope", Arial, sans-serif;
+    font-size: 25px;
+    font-weight: 800;
+    letter-spacing: -1px;
+
+    color: #171717 !important;
+    text-decoration: none !important;
+}
+
+.tema-marca-icone {
+    width: 39px;
+    height: 39px;
+    display: grid;
+    place-items: center;
+
+    background: #f6f6f6;
+    border-radius: 11px;
+    font-size: 23px;
+}
+
+.tema-subtitulo {
+    margin: 17px 10px 36px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    font-weight: 700;
+    color: #555;
+}
+
+/* Navegação lateral */
+
+.tema-navegacao,
+.tema-admin-links {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.tema-link {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+
+    min-height: 45px;
+    width: 100%;
+    padding: 13px 12px;
+
+    color: #555 !important;
+    text-decoration: none !important;
+    background: transparent;
+
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 1.3;
+    border-radius: 10px;
+}
+
+.tema-link:hover,
+.tema-link.ativo {
+    background: #f6f6f6 !important;
+    color: #171717 !important;
+    font-weight: 700;
+}
+
+.tema-icone {
+    width: 19px;
+    flex-shrink: 0;
+    text-align: center;
+    font-size: 17px;
+}
+
+/* Parte inferior do menu */
+
+.tema-sidebar-bottom {
+    margin-top: auto;
+    padding-top: 24px;
+}
+
+.tema-care-note {
+    margin: 0 5px 20px;
+    padding: 19px 15px;
+    background: #f6f6f6;
+    border-radius: 12px;
+}
+
+.tema-care-note strong {
+    display: block;
+    margin: 10px 0;
+
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.tema-care-note a {
+    color: #555 !important;
+    font-size: 12px;
+    text-decoration: none;
+}
+
+.tema-sidebar-footer {
+    margin: 18px 12px 0;
+    padding-top: 15px;
+    border-top: 1px solid var(--tema-borda);
+    color: #777;
+    font-size: 12px;
+}
+
+/* Conteúdo principal */
+
+.tema-workspace {
+    margin-left: 236px;
+    min-height: 100dvh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.tema-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+
+    height: 80px;
+    min-height: 80px;
+    padding: 0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+
+    background: white;
+    border-bottom: 1px solid var(--tema-borda);
+}
+
+.tema-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    color: #777;
+    font-size: 14px;
+}
+
+.tema-breadcrumb strong {
+    color: #171717;
+    font-weight: 600;
+}
+
+.tema-btn-entrar {
+    display: inline-block;
+    padding: 12px 17px;
+    background: var(--tema-laranja);
+    color: white !important;
+    border-radius: 8px;
+    text-decoration: none !important;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.tema-btn-entrar:hover {
+    background: var(--tema-laranja-hover);
+}
+
+.tema-content {
+    flex: 1 0 auto;
+    width: min(1000px, calc(100% - 64px)) !important;
+    max-width: 1000px !important;
+    margin: 45px auto !important;
+    padding: 0 !important;
+    background: transparent !important;
+}
+
+.tema-content > section,
+.tema-content > article {
+    padding: 32px;
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 16px;
+}
+
+.tema-content h1 {
+    color: #171717;
+    font-size: clamp(28px, 3vw, 39px);
+    font-weight: 800;
+}
+
+.tema-content h2 {
+    color: #171717;
+}
+
+.tema-content p {
+    line-height: 1.7;
+}
+
+.tema-content a:not(.botao) {
+    color: var(--tema-laranja);
+}
+
+/* Cartões */
+
+.tema-content .card-solicitacao,
+.tema-content .card-analise,
+.tema-content .card-usuario,
+.tema-content .card-gato {
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    box-shadow: none;
+}
+
+.tema-content .painel-solicitacoes,
+.tema-content .painel-analise,
+.tema-content .painel-usuarios,
+.tema-content .painel-senha {
+    width: 100%;
+    max-width: none;
+    padding: 32px;
+    background: white;
+    border: 1px solid #dedede;
+    border-radius: 16px;
+}
+
+.tema-content .titulo-solicitacoes h1,
+.tema-content .painel-analise h1,
+.tema-content .painel-usuarios h1,
+.tema-content .painel-senha h1 {
+    color: #171717;
+}
+
+.tema-content .etiqueta-solicitacoes,
+.tema-content .etiqueta-analise,
+.tema-content .etiqueta-usuarios,
+.tema-content .etiqueta-senha {
+    color: #555;
+    letter-spacing: 2px;
+}
+
+/* Botões e campos */
+
+.tema-content button[type="submit"],
+.tema-content .botao,
+.tema-content .voltar-catalogo,
+.tema-content .botao-voltar-analise,
+.tema-content .voltar-usuarios,
+.tema-content .botao-salvar-perfil,
+.tema-content .botao-salvar-senha {
+    background: var(--tema-laranja);
+    border-color: var(--tema-laranja);
+    color: white;
+    border-radius: 9px;
+}
+
+.tema-content input,
+.tema-content select,
+.tema-content textarea {
+    border-radius: 8px;
+    border: 1px solid #dedede;
+    font-family: inherit;
+}
+
+.tema-footer {
+    padding: 18px 42px;
+    text-align: right;
+    color: #777;
+    font-size: 12px;
+}
+
+/* Login e cadastro em modal */
+
+body.tema-auth {
+    overflow: auto;
+}
+
+.tema-auth-fundo {
+    flex: 1;
+    padding: 65px 50px;
+}
+
+.tema-auth-fundo h1 {
+    max-width: 680px;
+    margin: 16px 0;
+
+    font-size: clamp(34px, 4vw, 55px);
+    line-height: 1.15;
+}
+
+.tema-auth-fundo p {
+    color: #555;
+}
+
+.tema-etiqueta {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.tema-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 22px;
+    background: rgba(0, 0, 0, 0.53);
+    backdrop-filter: blur(4px);
+}
+
+.tema-modal {
+    position: relative;
+    width: min(540px, 100%);
+    max-height: min(92dvh, 850px);
+    overflow-y: auto;
+
+    padding: 32px;
+    background: #f6f6f6;
+    border-radius: 20px;
+    box-shadow: 0 28px 85px rgba(0, 0, 0, 0.2);
+}
+
+.tema-modal-fechar {
+    position: absolute;
+    top: 15px;
+    right: 16px;
+    z-index: 2;
+
+    width: 33px;
+    height: 33px;
+
+    display: grid;
+    place-items: center;
+
+    background: white;
+    border: 1px solid #dedede;
+    border-radius: 50%;
+
+    color: #171717 !important;
+    text-decoration: none !important;
+    font-size: 22px;
+}
+
+.tema-auth .tema-modal .tema-content {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    min-height: 0;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+.tema-auth .tema-modal .tema-content > section,
+.tema-auth .tema-modal .tema-content > article {
+    padding: 0;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}
+
+.tema-auth .tema-modal h1,
+.tema-auth .tema-modal h2 {
+    margin: 12px 0 16px;
+    font-size: 28px;
+    color: #171717;
+}
+
+.tema-auth .tema-modal input,
+.tema-auth .tema-modal select {
+    width: 100%;
+    padding: 12px;
+
+    background: white;
+    border: 1px solid #dedede;
+    border-radius: 8px;
+}
+
+.tema-auth .tema-modal button[type="submit"] {
+    width: 100%;
+    padding: 13px 18px;
+
+    background: var(--tema-laranja);
+    border: 0;
+    border-radius: 9px;
+
+    color: white;
+    font-weight: 700;
+}
+
+/* Responsividade */
+
+@media (max-width: 900px) {
+    .tema-sidebar {
+        width: 205px;
+        padding: 20px 12px;
+    }
+
+    .tema-workspace {
+        margin-left: 205px;
+    }
+
+    .tema-topbar {
+        padding: 0 22px;
+    }
+
+    .tema-content {
+        width: calc(100% - 36px) !important;
+    }
+}
+
+@media (max-width: 700px) {
+    .tema-sidebar {
+        position: static;
+        width: 100%;
+        padding: 15px;
+        border-right: 0;
+        border-bottom: 1px solid #dedede;
+    }
+
+    .tema-subtitulo {
+        margin: 4px 10px 12px;
+    }
+
+    .tema-navegacao {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .tema-link {
+        width: auto;
+        min-height: 36px;
+        padding: 8px;
+    }
+
+    .tema-sidebar-bottom {
+        display: none;
+    }
+
+    .tema-workspace {
+        margin-left: 0;
+    }
+
+    .tema-topbar {
+        height: 58px;
+        min-height: 58px;
+        padding: 0 15px;
+    }
+
+    .tema-content {
+        width: calc(100% - 24px) !important;
+        margin: 20px auto !important;
+    }
+
+    .tema-content > section,
+    .tema-content > article,
+    .tema-content .painel-solicitacoes,
+    .tema-content .painel-analise,
+    .tema-content .painel-usuarios {
+        padding: 19px;
+    }
+
+    .tema-auth-fundo {
+        padding: 28px;
+    }
+
+    .tema-modal {
+        padding: 24px;
+    }
+
+    .tema-footer {
+        text-align: center;
+    }
+}
+
+/* Minhas solicitações — visual do MiauLar original */
+
+body.pagina-solicitacoes-original {
+    background: #f6f7f7 !important;
+}
+
+.pagina-solicitacoes-original .tema-content,
+.pagina-solicitacoes-original .principal-solicitacoes {
+    width: min(1100px, calc(100% - 80px)) !important;
+    max-width: 1100px !important;
+    margin: 64px auto !important;
+    padding: 0 !important;
+}
+
+.pagina-solicitacoes-original .painel-solicitacoes,
+.pagina-solicitacoes-original .tema-content > section {
+    width: 100%;
+    min-height: 520px;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.cabecalho-pedidos-original {
+    margin-bottom: 40px;
+}
+
+.etiqueta-pedidos-original {
+    display: block;
+    margin-bottom: 12px;
+
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #555;
+}
+
+.cabecalho-pedidos-original h1 {
+    margin: 0 0 12px;
+    font-family: "Manrope", Arial, sans-serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 800;
+    letter-spacing: -2px;
+    color: #171717 !important;
+}
+
+.cabecalho-pedidos-original p {
+    margin: 0;
+    font-size: 15px;
+    color: #666;
+}
+
+.mensagem-pedidos-original {
+    color: #666;
+}
+
+.mensagem-pedidos-original:empty {
+    display: none;
+}
+
+/* Estado sem solicitações */
+
+.estado-vazio-pedidos {
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 12px;
+}
+
+.icone-vazio-pedidos {
+    width: 56px;
+    height: 56px;
+    display: grid;
+    place-items: center;
+    border-radius: 18px;
+    background: #f0efed;
+    color: #454545;
+    font-size: 27px;
+}
+
+.estado-vazio-pedidos h2 {
+    margin: 10px 0 0;
+    font-size: 24px;
+    color: #171717;
+    letter-spacing: -1px;
+}
+
+.estado-vazio-pedidos p {
+    max-width: 360px;
+    margin: 0;
+    font-size: 14px;
+    color: #666;
+    line-height: 1.7;
+}
+
+.estado-vazio-pedidos a,
+.pagina-solicitacoes-original .voltar-catalogo {
+    display: inline-block;
+    margin-top: 12px;
+    padding: 13px 20px;
+    background: #b7440b;
+    border-radius: 8px;
+    color: white !important;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.pagina-solicitacoes-original .rodape-painel-solicitacoes {
+    margin-top: 24px;
+}
+
+/* Quando há solicitações, mantém os cartões */
+
+.pagina-solicitacoes-original .lista-solicitacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.pagina-solicitacoes-original .card-solicitacao {
+    background: white;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 18px;
+}
+
+@media (max-width: 700px) {
+    .pagina-solicitacoes-original .tema-content,
+    .pagina-solicitacoes-original .principal-solicitacoes {
+        width: calc(100% - 32px) !important;
+        margin: 30px auto !important;
+    }
+
+    .cabecalho-pedidos-original h1 {
+        font-size: 34px;
+        letter-spacing: -1px;
+    }
+}
+
+/* LOGIN E CADASTRO - VISUAL DO MIAULAR ORIGINAL */
+
+.tema-auth .tema-backdrop {
+    background: rgba(20, 20, 20, 0.58);
+    backdrop-filter: blur(4px);
+}
+
+.tema-auth .tema-modal {
+    width: min(520px, 96vw);
+    max-height: 90dvh;
+    padding: 35px 34px 30px;
+    background: #f7f8f8;
+    border: 1px solid #e5e7e7;
+    border-radius: 18px;
+    overflow-y: auto;
+}
+
+.tema-auth-cabecalho {
+    margin-bottom: 23px;
+}
+
+.tema-auth-etiqueta {
+    display: block;
+    margin-bottom: 10px;
+    color: #555;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 1.8px;
+}
+
+.tema-auth .tema-auth-titulo {
+    margin: 0 0 9px;
+    color: #171717;
+    font-family: "Manrope", Arial, sans-serif;
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: -1.1px;
+    line-height: 1.2;
+}
+
+.tema-auth-descricao {
+    margin: 0 0 24px;
+    color: #666;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Abas Entrar / Criar conta */
+
+.tema-auth-abas {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.tema-auth-aba {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 42px;
+    padding: 10px;
+    background: transparent;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    color: #555 !important;
+    text-decoration: none !important;
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.tema-auth-aba.ativa {
+    background: #b7440b;
+    border-color: #b7440b;
+    color: white !important;
+}
+
+/* Formulários originais */
+
+.tema-auth .tema-modal .tema-content h1 {
+    display: none;
+}
+
+.tema-auth .tema-modal label {
+    display: block;
+    margin-bottom: 8px;
+    color: #292929;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.tema-auth .tema-modal input:not([type="checkbox"]),
+.tema-auth .tema-modal select {
+    display: block;
+    width: 100%;
+    min-height: 44px;
+    padding: 11px 12px;
+    background: white;
+    border: 1px solid #dfe2e3;
+    border-radius: 7px;
+    color: #222;
+    font: inherit;
+}
+
+.tema-auth .tema-modal input:focus,
+.tema-auth .tema-modal select:focus {
+    outline: 2px solid #b7440b;
+    outline-offset: 2px;
+}
+
+.tema-auth .tema-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.tema-auth .tema-modal button[type="submit"] {
+    width: 100%;
+    min-height: 45px;
+    margin-top: 8px;
+    background: #b7440b;
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.tema-auth .tema-modal button[type="submit"]:hover {
+    background: #a43b05;
+}
+
+/* Botão fechar */
+
+.tema-auth .tema-modal-fechar {
+    top: 14px;
+    right: 14px;
+    border: none;
+    background: transparent;
+    color: #555 !important;
+}
+
+/* Telas menores */
+
+@media (max-width: 600px) {
+    .tema-auth .tema-backdrop {
+        padding: 12px;
+    }
+
+    .tema-auth .tema-modal {
+        width: 100%;
+        padding: 28px 20px;
+        max-height: 94dvh;
+    }
+
+    .tema-auth .tema-auth-titulo {
+        font-size: 25px;
+    }
+}
+
+/* LOGIN E CADASTRO — VISUAL FIEL AO MIAULAR ORIGINAL */
+
+body.tema-auth .tema-backdrop {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 20px !important;
+    background: rgba(0, 0, 0, 0.50) !important;
+    backdrop-filter: blur(5px);
+}
+
+body.tema-auth .tema-modal {
+    position: relative !important;
+    width: min(520px, 100%) !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    background: #f6f6f6 !important;
+    padding: 32px !important;
+    border: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 30px 90px rgba(0, 0, 0, .20) !important;
+    color: #171717 !important;
+}
+
+body.tema-auth .tema-modal-fechar {
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    width: 34px !important;
+    height: 34px !important;
+    display: grid !important;
+    place-items: center !important;
+    border: 1px solid #dedede !important;
+    border-radius: 50% !important;
+    background: white !important;
+    color: #171717 !important;
+    text-decoration: none !important;
+    font-size: 22px !important;
+}
+
+body.tema-auth .tema-auth-cabecalho {
+    margin: 0 0 20px !important;
+    padding: 0 !important;
+}
+
+body.tema-auth .tema-auth-etiqueta {
+    display: block;
+    margin: 0 0 12px;
+    font-family: "DM Sans", Arial, sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #555;
+}
+
+body.tema-auth .tema-auth-titulo {
+    margin: 0 0 15px !important;
+    font-family: "Manrope", Arial, sans-serif !important;
+    font-size: 28px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+    letter-spacing: -1px !important;
+    color: #171717 !important;
+}
+
+body.tema-auth .tema-auth-descricao {
+    margin: 0 0 20px !important;
+    font-size: 16px !important;
+    line-height: 1.7 !important;
+    color: #555 !important;
+}
+
+/* Abas iguais à referência */
+
+body.tema-auth .tema-auth-abas {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    margin: 20px 0 !important;
+}
+
+body.tema-auth .tema-auth-aba {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 14px 20px !important;
+    min-height: 47px !important;
+    border-radius: 9px !important;
+    border: 1px solid #dedede !important;
+    background: white !important;
+    color: #171717 !important;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+}
+
+body.tema-auth .tema-auth-aba.ativa {
+    background: #b7440b !important;
+    border-color: #b7440b !important;
+    color: white !important;
+}
+
+/* Aviso acima do formulário */
+
+body.tema-auth .tema-auth-aviso {
+    margin: 18px 0 23px;
+    padding: 13px 14px;
+    border-radius: 8px;
+    background: #f0efed;
+    color: #555;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* Formulário */
+
+body.tema-auth .tema-modal .tema-content {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+/* Evita repetir títulos da página antiga */
+
+body.tema-auth .tema-modal .tema-content h1,
+body.tema-auth .tema-modal .tema-content .topo,
+body.tema-auth .tema-modal .tema-content .top {
+    display: none !important;
+}
+
+body.tema-auth .tema-modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+body.tema-auth .tema-modal label {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    color: #171717 !important;
+}
+
+body.tema-auth .tema-modal input:not([type="checkbox"]),
+body.tema-auth .tema-modal select {
+    width: 100% !important;
+    min-height: 47px !important;
+    padding: 13px !important;
+    border: 1px solid #dedede !important;
+    border-radius: 8px !important;
+    background: white !important;
+    color: #171717 !important;
+    font-size: 15px !important;
+}
+
+body.tema-auth .tema-modal button[type="submit"] {
+    width: 100% !important;
+    min-height: 48px !important;
+    padding: 14px 20px !important;
+    margin-top: 10px !important;
+    border: none !important;
+    border-radius: 9px !important;
+    background: #b7440b !important;
+    color: white !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+}
+
+body.tema-auth .tema-modal button[type="submit"]:hover {
+    background: #a43b05 !important;
+}
+
+@media (max-width: 600px) {
+    body.tema-auth .tema-modal {
+        padding: 24px !important;
+    }
+}
+
+/* MIAULAR — AJUSTE FINAL DO LOGIN E CADASTRO */
+
+body.tema-auth .tema-modal {
+    box-sizing: border-box;
+    width: min(520px, calc(100vw - 32px)) !important;
+    max-height: min(90dvh, 760px) !important;
+    overflow-y: auto !important;
+    padding: 32px !important;
+    border-radius: 18px !important;
+    background: #f8f8f7 !important;
+    box-shadow: 0 28px 75px rgba(0, 0, 0, 0.22) !important;
+}
+
+body.tema-auth .tema-auth-cabecalho {
+    margin-bottom: 20px !important;
+}
+
+body.tema-auth .tema-auth-titulo {
+    font-size: 28px !important;
+    line-height: 1.25 !important;
+    color: #202020 !important;
+}
+
+body.tema-auth .tema-auth-descricao {
+    font-size: 15px !important;
+    line-height: 1.65 !important;
+    color: #656565 !important;
+}
+
+body.tema-auth .tema-auth-abas {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 10px !important;
+    margin-bottom: 20px !important;
+}
+
+body.tema-auth .tema-auth-aba {
+    min-height: 45px !important;
+    border-radius: 8px !important;
+}
+
+body.tema-auth .tema-auth-aba.ativa,
+body.tema-auth .tema-modal button[type="submit"] {
+    background: #b7440b !important;
+    color: #fff !important;
+}
+
+body.tema-auth .tema-modal input:not([type="checkbox"]),
+body.tema-auth .tema-modal select {
+    box-sizing: border-box;
+    width: 100% !important;
+    min-height: 46px !important;
+    border: 1px solid #dedede !important;
+    border-radius: 8px !important;
+    background: white !important;
+}
+
+@media (max-width: 600px) {
+    body.tema-auth .tema-modal {
+        padding: 24px 20px !important;
+        max-height: 94dvh !important;
+    }
+}
+

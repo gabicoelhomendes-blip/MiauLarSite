@@ -140,11 +140,39 @@ async function carregarSolicitacoes() {
         mensagem.textContent = "";
         lista.replaceChildren();
 
-        if (dados.length === 0) {
-            mensagem.textContent =
-                "Você ainda não realizou nenhuma solicitação de adoção.";
-            return;
-        }
+
+if (dados.length === 0) {
+    mensagem.textContent = "";
+
+    const vazio = document.createElement("div");
+    vazio.className = "estado-vazio-pedidos";
+
+    const icone = document.createElement("div");
+    icone.className = "icone-vazio-pedidos";
+    icone.textContent = "♡";
+
+    const titulo = document.createElement("h2");
+    titulo.textContent = "Acompanhe seus próximos passos.";
+
+    const descricao = document.createElement("p");
+    descricao.textContent =
+    "Você ainda não enviou nenhum pedido. Explore os perfis e encontre seu próximo companheiro.";
+
+
+    const link = document.createElement("a");
+    link.href = "index.html#catalogo";
+    link.textContent = "Explorar gatos →";
+
+
+    vazio.append(icone, titulo, descricao, link);
+    lista.appendChild(vazio);
+
+    document.querySelector(
+        ".rodape-painel-solicitacoes"
+    ).hidden = true;
+
+    return;
+}
 
         for (const solicitacao of dados) {
             lista.appendChild(
