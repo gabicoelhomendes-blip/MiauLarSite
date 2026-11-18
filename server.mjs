@@ -230,7 +230,8 @@ async function entregarArquivo(req, res, url) {
             "login.html",
             "cadastrar-gato.html",
             "gerenciar-gatos.html",
-            "editar-gato.html"
+            "editar-gato.html",
+            "minhas-solicitacoes.html"
 
         ];
 
@@ -1183,6 +1184,50 @@ if (url.pathname === "/api/solicitacoes" && req.method === "POST") {
     await solicitarAdocao(req, res, usuario);
     return;
 }
+
+    // ROTA: Consultar minhas solicitações de adoção
+    if (
+        url.pathname === "/api/minhas-solicitacoes" &&
+        req.method === "GET"
+    ) {
+        const usuario = exigirPerfil(req, res, ["adotante"]);
+
+        if (!usuario) {
+            return;
+        }
+
+        try {
+            const solicitacoes = banco.prepare(`
+                SELECT
+                    solicitacoes.id,
+                    solicitacoes.questionario,
+                    solicitacoes.status,
+                    solicitacoes.criado_em,
+                    gatos.nome AS nome_gato,
+                    gatos.imagem AS imagem_gato
+                FROM solicitacoes
+                INNER JOIN gatos
+                    ON gatos.id = solicitacoes.gato_id
+                WHERE solicitacoes.usuario_id = ?
+                ORDER BY solicitacoes.criado_em DESC,
+                         solicitacoes.id DESC
+            `).all(usuario.id);
+
+            responder(res, 200, solicitacoes);
+
+        } catch (erro) {
+            console.error(
+                "Erro ao consultar solicitações:",
+                erro.message
+            );
+
+            responder(res, 500, {
+                erro: "Não foi possível carregar suas solicitações."
+            });
+        }
+
+        return;
+    }
 
     // ROTA 2: Cadastrar usuários
     if (url.pathname === "/api/cadastro" && req.method === "POST") {

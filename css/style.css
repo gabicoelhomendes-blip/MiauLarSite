@@ -1280,3 +1280,229 @@ main {
 .mensagem-adocao {
     font-weight: 600;
 }
+
+/* RF-11 - Página Minhas solicitações */
+
+.pagina-solicitacoes {
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: #f8f9fa;
+    color: #292929;
+}
+
+.cabecalho-solicitacoes {
+    background: #fff7f1;
+    border-bottom: 1px solid #f1e5dd;
+}
+
+.conteudo-cabecalho {
+    width: min(1100px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 22px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo-solicitacoes {
+    color: #f47742;
+    font-size: 26px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.conteudo-cabecalho nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+}
+
+.conteudo-cabecalho nav a {
+    color: #333;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.conteudo-cabecalho nav a:hover,
+.conteudo-cabecalho nav a[aria-current="page"] {
+    color: #f47742;
+}
+
+.principal-solicitacoes {
+    flex: 1;
+    width: min(900px, calc(100% - 32px));
+    margin: 44px auto;
+}
+
+.painel-solicitacoes {
+    background: white;
+    border: 1px solid #eaeaea;
+    border-radius: 16px;
+    padding: 32px;
+}
+
+.titulo-solicitacoes {
+    margin-bottom: 30px;
+}
+
+.etiqueta-solicitacoes {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: #f47742;
+}
+
+.titulo-solicitacoes h1 {
+    margin: 10px 0;
+    color: #f47742;
+    font-size: 30px;
+}
+
+.titulo-solicitacoes p {
+    color: #666;
+    line-height: 1.6;
+}
+
+.lista-solicitacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.card-solicitacao {
+    display: flex;
+    gap: 20px;
+    padding: 18px;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    background: #fff;
+}
+
+.imagem-solicitacao {
+    width: 145px;
+    height: 145px;
+    object-fit: cover;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.conteudo-solicitacao {
+    flex: 1;
+    min-width: 0;
+}
+
+.topo-solicitacao {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.topo-solicitacao h2 {
+    margin: 0;
+    font-size: 21px;
+}
+
+.status-solicitacao {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-solicitacao.pendente {
+    background: #fff4df;
+    color: #966000;
+}
+
+.status-solicitacao.aprovada {
+    background: #e3f6ea;
+    color: #167640;
+}
+
+.status-solicitacao.recusada {
+    background: #fde8e8;
+    color: #b42323;
+}
+
+.data-solicitacao {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.texto-questionario {
+    margin: 8px 0 14px;
+    color: #555;
+    line-height: 1.6;
+    overflow-wrap: anywhere;
+}
+
+.aviso-solicitacao {
+    color: #f47742;
+    font-weight: 600;
+    font-size: 13px;
+}
+
+.rodape-painel-solicitacoes {
+    margin-top: 28px;
+    text-align: center;
+}
+
+.voltar-catalogo {
+    display: inline-block;
+    padding: 11px 18px;
+    border-radius: 8px;
+    background: #f47742;
+    color: white;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.erro-solicitacoes {
+    color: #b42323;
+}
+
+.rodape-solicitacoes {
+    padding: 22px;
+    background: #fff7f1;
+    text-align: center;
+    color: #555;
+}
+
+@media (max-width: 600px) {
+    .conteudo-cabecalho {
+        flex-direction: column;
+    }
+
+    .conteudo-cabecalho nav {
+        justify-content: center;
+        gap: 14px;
+    }
+
+    .principal-solicitacoes {
+        margin: 20px auto;
+    }
+
+    .painel-solicitacoes {
+        padding: 20px;
+    }
+
+    .card-solicitacao {
+        flex-direction: column;
+    }
+
+    .imagem-solicitacao {
+        width: 100%;
+        height: 200px;
+    }
+
+    .titulo-solicitacoes h1 {
+        font-size: 25px;
+    }
+}

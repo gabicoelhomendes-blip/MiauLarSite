@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minhas solicitações | MiauLar</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="pagina-solicitacoes">
+
+    <header class="cabecalho-solicitacoes">
+        <div class="conteudo-cabecalho">
+            <a href="index.html" class="logo-solicitacoes">
+                MiauLar
+            </a>
+
+            <nav>
+                <a href="index.html">Início</a>
+                <a href="index.html#catalogo">Catálogo</a>
+                <a href="minhas-solicitacoes.html" aria-current="page">
+                    Minhas solicitações
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="principal-solicitacoes">
+        <section class="painel-solicitacoes">
+            <div class="titulo-solicitacoes">
+                <span class="etiqueta-solicitacoes">
+                    ACOMPANHAMENTO
+                </span>
+
+                <h1>Minhas solicitações</h1>
+
+                <p>
+                    Acompanhe seus pedidos de adoção e confira
+                    a situação de cada gatinho.
+                </p>
+            </div>
+
+            <div id="mensagem-solicitacoes"
+                 role="status"
+                 aria-live="polite">
+                Carregando suas solicitações...
+            </div>
+
+            <div id="lista-solicitacoes"
+                 class="lista-solicitacoes">
+            </div>
+
+            <div class="rodape-painel-solicitacoes">
+                <a href="index.html#catalogo"
+                   class="voltar-catalogo">
+                    Ver outros gatinhos
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="rodape-solicitacoes">
+        <p>MiauLar - Adoção responsável de gatos.</p>
+    </footer>
+
+    <script type="module"
+            src="js/minhas-solicitacoes.js"></script>
+</body>
+</html>
