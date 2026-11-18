@@ -555,3 +555,533 @@ body:has(#form-editar-gato) .cadastro {
     padding: 11px;
     font-size: 14px;
 }
+/* Padrão visual da página Cadastrar gato */
+body:has(#form-gato) .cadastro {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 16px 24px;
+}
+
+#form-gato {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 10px 16px;
+    align-items: center;
+}
+
+#form-gato label {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#form-gato input,
+#form-gato select,
+#form-gato textarea {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#form-gato textarea {
+    min-height: 60px;
+    resize: vertical;
+}
+
+#form-gato small {
+    grid-column: 2;
+    font-size: 12px;
+}
+
+#form-gato button,
+#form-gato #mensagem-gato {
+    grid-column: 1 / -1;
+}
+
+#form-gato button {
+    margin-top: 8px;
+    padding: 11px;
+}
+
+/* Versão para celular */
+@media (max-width: 600px) {
+    #form-gato {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+
+    #form-gato small,
+    #form-gato button,
+    #form-gato #mensagem-gato {
+        grid-column: 1;
+    }
+
+    #form-gato label:not(:first-child) {
+        margin-top: 8px;
+    }
+}
+/* Ajuste final - Cadastrar gato */
+body:has(#form-gato) header {
+    padding: 8px 24px;
+}
+
+body:has(#form-gato) header p {
+    margin: 4px 0;
+}
+
+body:has(#form-gato) main {
+    padding: 8px 16px;
+}
+
+body:has(#form-gato) .cadastro {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 12px 24px;
+}
+
+body:has(#form-gato) .cadastro h2 {
+    font-size: 24px;
+    margin: 0 0 6px;
+}
+
+body:has(#form-gato) .cadastro > p {
+    margin: 0 0 10px;
+    font-size: 16px;
+}
+
+#form-gato {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    column-gap: 16px;
+    row-gap: 6px;
+    align-items: center;
+}
+
+#form-gato label {
+    margin: 0;
+    font-size: 14px;
+}
+
+#form-gato input,
+#form-gato select,
+#form-gato textarea {
+    min-height: 32px;
+    padding: 6px 10px;
+    font-size: 14px;
+    margin: 0;
+}
+
+#form-gato textarea {
+    height: 48px;
+    min-height: 48px;
+}
+
+#form-gato input[type="file"] {
+    padding: 4px 8px;
+}
+
+#form-gato small {
+    font-size: 12px;
+    margin: 0;
+}
+
+#form-gato button {
+    margin-top: 3px;
+    padding: 9px;
+    font-size: 14px;
+}
+
+#form-gato #mensagem-gato:empty {
+    display: none;
+}
+
+body:has(#form-gato) footer {
+    padding: 6px;
+}
+
+/* Celular: mantém os campos em uma coluna */
+@media (max-width: 600px) {
+    #form-gato {
+        grid-template-columns: 1fr;
+        gap: 6px;
+    }
+}
+/* Padrão visual - Gerenciar gatos */
+body:has(#lista-gerenciamento) header {
+    padding: 8px 24px;
+}
+
+body:has(#lista-gerenciamento) header p {
+    margin: 4px 0;
+}
+
+body:has(#lista-gerenciamento) main {
+    padding: 12px 16px;
+}
+
+body:has(#lista-gerenciamento) .cadastro {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 20px 24px;
+}
+
+body:has(#lista-gerenciamento) .cadastro h2 {
+    font-size: 24px;
+    margin: 0 0 8px;
+}
+
+body:has(#lista-gerenciamento) .cadastro > p {
+    font-size: 16px;
+    margin: 0 0 14px;
+}
+
+/* Organiza os gatos em cards */
+#lista-gerenciamento {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+}
+
+/* Cards da área de gerenciamento */
+#lista-gerenciamento .card-gato {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eeeeee;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #ffffff;
+}
+
+/* Fotografias com tamanho padronizado */
+#lista-gerenciamento .card-gato img {
+    width: 100%;
+    height: 130px;
+    object-fit: cover;
+}
+
+/* Informações dos gatos */
+#lista-gerenciamento .informacoes-gato {
+    padding: 12px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+#lista-gerenciamento .informacoes-gato h3 {
+    font-size: 17px;
+    margin: 0 0 6px;
+}
+
+#lista-gerenciamento .informacoes-gato p {
+    font-size: 14px;
+    margin: 4px 0;
+}
+
+/* Botão de edição */
+#lista-gerenciamento .botao {
+    display: block;
+    margin-top: auto;
+    padding: 10px;
+    font-size: 14px;
+    text-align: center;
+}
+
+/* Celulares */
+@media (max-width: 600px) {
+    #lista-gerenciamento {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Tablets */
+@media (min-width: 601px) and (max-width: 900px) {
+    #lista-gerenciamento {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+/* Centraliza as fotos no gerenciamento de gatos */
+#lista-gerenciamento .card-gato img {
+    display: block;
+    width: 100%;
+    height: 160px;
+    object-fit: contain;
+    object-position: center;
+    margin: 0 auto;
+}
+/* Padrão visual - Página Login */
+body:has(#form-login) header {
+    padding: 10px 24px;
+}
+
+body:has(#form-login) header p {
+    margin: 4px 0;
+}
+
+body:has(#form-login) main {
+    padding: 16px;
+}
+
+body:has(#form-login) .cadastro {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+body:has(#form-login) .cadastro h2 {
+    font-size: 24px;
+    margin: 0 0 8px;
+}
+
+body:has(#form-login) .cadastro > p {
+    font-size: 16px;
+    margin: 8px 0 14px;
+}
+
+#form-login {
+    display: grid;
+    grid-template-columns: 120px minmax(0, 1fr);
+    gap: 14px 16px;
+    align-items: center;
+}
+
+#form-login label {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#form-login input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+#form-login button,
+#mensagem-login {
+    grid-column: 1 / -1;
+}
+
+#form-login button {
+    margin-top: 6px;
+    padding: 11px;
+    font-size: 14px;
+}
+
+#mensagem-login:empty {
+    display: none;
+}
+
+body:has(#form-login) footer {
+    padding: 10px;
+}
+
+/* Adaptação para celular */
+@media (max-width: 600px) {
+    #form-login {
+        grid-template-columns: 1fr;
+        gap: 8px;
+    }
+
+    #form-login button,
+    #mensagem-login {
+        grid-column: 1;
+    }
+}
+/* LOGIN - Visual moderno do MiauLarr */
+
+body:has(#form-login) {
+    background: #fffaf7;
+}
+
+/* Cabeçalho compacto */
+body:has(#form-login) header {
+    padding: 14px 24px;
+}
+
+body:has(#form-login) header .topo {
+    margin-bottom: 0;
+}
+
+/* Centralização do conteúdo */
+body:has(#form-login) main {
+    min-height: 65vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px 16px;
+}
+
+/* Caixa de login */
+body:has(#form-login) .cadastro {
+    width: 100%;
+    max-width: 520px;
+    padding: 32px;
+    background: #ffffff;
+    border: 1px solid #f2e8e2;
+    border-radius: 18px;
+    box-shadow: 0 12px 35px rgba(80, 45, 25, 0.07);
+}
+
+/* Título */
+body:has(#form-login) .cadastro h2 {
+    color: #f47742;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* Descrição */
+body:has(#form-login) .cadastro > p {
+    color: #666;
+    font-size: 14px;
+    margin-bottom: 22px;
+}
+
+/* Organização do formulário */
+#form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+/* Títulos dos campos */
+#form-login label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-top: 6px;
+}
+
+/* Campos */
+#form-login input {
+    width: 100%;
+    height: 44px;
+    padding: 10px 14px;
+    font-size: 14px;
+    background: #fff;
+    border: 1px solid #e5ded9;
+    border-radius: 9px;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+/* Efeito ao selecionar */
+#form-login input:focus {
+    border-color: #f47742;
+    box-shadow: 0 0 0 3px rgba(244, 119, 66, 0.12);
+}
+
+/* Botão */
+#form-login .botao {
+    width: 100%;
+    margin-top: 14px;
+    padding: 13px;
+    background: #f47742;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+#form-login .botao:hover {
+    background: #e86431;
+    transform: translateY(-1px);
+}
+
+#form-login .botao:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Mensagens */
+#mensagem-login {
+    margin: 8px 0 0;
+    font-size: 14px;
+}
+
+#mensagem-login:empty {
+    display: none;
+}
+
+/* Link para cadastro */
+body:has(#form-login) .cadastro > p:last-child {
+    text-align: center;
+    margin: 20px 0 0;
+    font-size: 14px;
+}
+
+body:has(#form-login) .cadastro > p:last-child a {
+    color: #ef713a;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+body:has(#form-login) .cadastro > p:last-child a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+    body:has(#form-login) main {
+        min-height: auto;
+        padding: 20px 12px;
+    }
+
+    body:has(#form-login) .cadastro {
+        padding: 24px 18px;
+    }
+
+    body:has(#form-login) .cadastro h2 {
+        font-size: 23px;
+    }
+}
+/* Ajuste dos campos de login */
+#form-login {
+    display: grid;
+    grid-template-columns: 90px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 16px;
+    row-gap: 14px;
+}
+
+#form-login label {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+
+#form-login input {
+    height: 42px;
+    padding: 8px 12px;
+    border: 1px solid #e5ded9;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+}
+
+#form-login .botao,
+#mensagem-login {
+    grid-column: 1 / -1;
+}
+
+#form-login .botao {
+    margin-top: 10px;
+}
+
+/* Celular */
+@media (max-width: 600px) {
+    #form-login {
+        grid-template-columns: 1fr;
+        row-gap: 8px;
+    }
+}
